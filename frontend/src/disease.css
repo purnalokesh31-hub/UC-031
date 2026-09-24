@@ -1,0 +1,37 @@
+.disease-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr);
+  align-items: start;
+  gap: 20px;
+}
+.disease-upload-column, .disease-history-column { min-width: 0; }
+.disease-upload-column { max-width: 620px; width: 100%; }
+.disease-layout button:focus-visible,
+.disease-layout [role="button"]:focus-visible,
+.disease-layout input:focus-visible {
+  outline: 3px solid rgba(22, 101, 52, .36);
+  outline-offset: 3px;
+}
+.disease-layout [role="button"] { touch-action: manipulation; }
+.disease-layout button:disabled { cursor: wait !important; opacity: .7; }
+.disease-history-column > .card,
+.disease-upload-column > .card { border-color: #e0e9e0; border-radius: 16px; box-shadow: 0 2px 9px rgba(25,45,31,.045); }
+.disease-history-column > .card:hover,
+.disease-upload-column > .card:hover { transform: none; box-shadow: 0 3px 12px rgba(25,45,31,.07); }
+.disease-layout .hero-banner { border-radius: 17px; box-shadow: 0 8px 22px rgba(28,75,49,.12); }
+.disease-layout .btn-secondary { min-height: 44px; }
+.disease-layout .card-body button[aria-label="Refresh scan history"] { min-width: 40px; min-height: 40px; border-radius: 9px !important; }
+
+@media (max-width: 920px) {
+  .disease-layout { grid-template-columns: minmax(0,1fr); }
+  .disease-upload-column { max-width: none; }
+}
+@media (max-width: 600px) {
+  .disease-layout { gap: 15px; min-height: 0 !important; }
+  .disease-layout .hero-banner { padding: 19px 17px; }
+  .disease-layout > * { min-width: 0; }
+  .disease-layout .card-header { padding: 13px 14px; }
+  .disease-layout .card-body { padding-right: 14px; padding-left: 14px; }
+  .disease-layout .btn-secondary { font-size: .76rem; padding-right: 9px; padding-left: 9px; }
+  .disease-layout .history-item { min-height: 56px; }
+}

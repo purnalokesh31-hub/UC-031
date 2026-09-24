@@ -1,0 +1,262 @@
+{
+  "metadata": {
+    "name": "CropGuard AI — Precision Agronomy Interventions",
+    "region": "Andhra Pradesh & Telangana, India",
+    "version": "1.0.0",
+    "source": "ICAR / State Agriculture Dept / RBK Field Data"
+  },
+  "yield_thresholds": {
+    "critical": 0.5,
+    "warning": 0.7,
+    "note": "Fraction of crop baseline yield. Below critical → red alert + full intervention package"
+  },
+  "interventions": {
+    "Rice": {
+      "baseline_yield_qph": 55,
+      "npk_deficiency": {
+        "N_low": {
+          "symptom": "Yellowing of older leaves (chlorosis), stunted growth",
+          "remedy": "Apply Urea @ 45 kg/acre as top-dressing. Split into 2 doses: basal + 30-day.",
+          "organic_alternative": "Azolla biofertilizer incorporation (1.5 t/ha)"
+        },
+        "P_low": {
+          "symptom": "Dark green to purplish leaves, poor root development",
+          "remedy": "Apply Single Super Phosphate (SSP) @ 30 kg P₂O₅/acre at transplanting",
+          "organic_alternative": "PSB (Phosphate Solubilizing Bacteria) seed treatment"
+        },
+        "K_low": {
+          "symptom": "Leaf tip burning (scorch), weak stems, poor grain filling",
+          "remedy": "Apply MOP (Muriate of Potash) @ 25 kg K₂O/acre",
+          "organic_alternative": "Wood ash application @ 500 kg/ha"
+        }
+      },
+      "weather_stress": {
+        "high_temp": {
+          "threshold": 35,
+          "remedy": "Evening irrigation to reduce canopy temp. Plant heat-tolerant variety (MTU-7029)."
+        },
+        "low_rainfall": {
+          "threshold": 150,
+          "remedy": "Activate SRI (System of Rice Intensification) — AWD (Alternate Wetting & Drying). Apply anti-transpirant (Kaolin 5%) foliar spray."
+        }
+      },
+      "pest_interventions": [
+        {
+          "pest": "Brown Plant Hopper (BPH)",
+          "chemical": "Imidacloprid 17.8 SL @ 0.5 ml/L water",
+          "bio": "Release Mirid bug (Cyrtorhinus lividipennis) @ 5000/ha"
+        },
+        {
+          "pest": "Leaf Folder",
+          "chemical": "Chlorpyriphos 20 EC @ 2.5 ml/L",
+          "bio": "Trichogramma japonicum egg parasitoid @ 50,000/ha"
+        },
+        {
+          "pest": "Blast (Pyricularia oryzae)",
+          "chemical": "Tricyclazole 75 WP @ 0.6 g/L",
+          "bio": "Pseudomonas fluorescens @ 2.5 kg/ha seed treatment"
+        }
+      ]
+    },
+    "Wheat": {
+      "baseline_yield_qph": 45,
+      "npk_deficiency": {
+        "N_low": {
+          "symptom": "Pale yellowing from older leaves upward",
+          "remedy": "Apply Urea @ 40 kg/acre. Split 50% basal + 50% at crown root initiation stage."
+        },
+        "P_low": {
+          "symptom": "Reddish-purple discolouration on leaves",
+          "remedy": "DAP (Di-Ammonium Phosphate) @ 25 kg/acre at sowing"
+        },
+        "K_low": {
+          "symptom": "Marginal leaf scorch, lodging susceptibility",
+          "remedy": "MOP @ 20 kg K₂O/acre"
+        }
+      },
+      "weather_stress": {
+        "high_temp": {
+          "threshold": 28,
+          "remedy": "Terminal heat stress — irrigate at boot stage. Use heat-tolerant variety (K-307, GW-322)."
+        },
+        "low_rainfall": {
+          "threshold": 60,
+          "remedy": "Critical irrigations: CRI (Crown Root Initiation), tillering, and grain filling stages."
+        }
+      },
+      "pest_interventions": [
+        {
+          "pest": "Aphids (Sitobion avenae)",
+          "chemical": "Thiamethoxam 25 WG @ 100 g/ha",
+          "bio": "Release Chrysoperla carnea @ 50,000 eggs/ha"
+        },
+        {
+          "pest": "Yellow Rust (Puccinia striiformis)",
+          "chemical": "Propiconazole 25 EC @ 1 ml/L",
+          "bio": "Resistant variety selection (WH-1105)"
+        }
+      ]
+    },
+    "Maize": {
+      "baseline_yield_qph": 50,
+      "npk_deficiency": {
+        "N_low": {
+          "symptom": "V-shaped yellowing from leaf tip toward midrib on lower leaves",
+          "remedy": "Urea @ 50 kg/acre. Apply in 3 splits: basal, 30-day, 45-day."
+        },
+        "P_low": {
+          "symptom": "Purple discolouration on young plants",
+          "remedy": "SSP @ 35 kg/acre at sowing"
+        },
+        "K_low": {
+          "symptom": "Leaf margin necrosis, poor ear development",
+          "remedy": "MOP @ 30 kg/acre"
+        }
+      },
+      "weather_stress": {
+        "high_temp": {
+          "threshold": 38,
+          "remedy": "Foliar spray of Potassium Nitrate (13:0:45) @ 2% during silking stage."
+        },
+        "low_rainfall": {
+          "threshold": 80,
+          "remedy": "Drip irrigation (critical at VT + R1 stage). Mulching with crop residue."
+        }
+      },
+      "pest_interventions": [
+        {
+          "pest": "Fall Armyworm (Spodoptera frugiperda)",
+          "chemical": "Emamectin Benzoate 5 SG @ 0.4 g/L into whorl",
+          "bio": "Beauveria bassiana @ 5 × 10¹² spores/ha + Nomuraea rileyi"
+        },
+        {
+          "pest": "Stem Borer (Chilo partellus)",
+          "chemical": "Chlorantraniliprole 18.5 SC @ 0.4 ml/L",
+          "bio": "Trichogramma chilonis @ 1,50,000/ha"
+        }
+      ]
+    },
+    "Cotton": {
+      "baseline_yield_qph": 20,
+      "npk_deficiency": {
+        "N_low": {
+          "symptom": "General yellowing, reduced boll setting",
+          "remedy": "Urea @ 30 kg/acre at squaring stage"
+        },
+        "P_low": {
+          "symptom": "Poor root growth, dark green foliage turning purple",
+          "remedy": "DAP @ 20 kg/acre at basal"
+        },
+        "K_low": {
+          "symptom": "Interveinal chlorosis, premature boll shedding (Boll retention problem)",
+          "remedy": "MOP @ 35 kg/acre + foliar KNO₃ @ 1.5% at flowering"
+        }
+      },
+      "weather_stress": {
+        "high_temp": {
+          "threshold": 40,
+          "remedy": "Anti-transpirant spray (Kaolin 5%). Irrigate at flower bud initiation."
+        },
+        "low_rainfall": {
+          "threshold": 60,
+          "remedy": "Drip irrigation with fertigation. Mulching to conserve soil moisture."
+        }
+      },
+      "pest_interventions": [
+        {
+          "pest": "Pink Bollworm (Pectinophora gossypiella)",
+          "chemical": "Profenophos 50 EC @ 2 ml/L",
+          "bio": "Pheromone trap (Gossyplure) @ 5/acre + Trichogramma spp."
+        },
+        {
+          "pest": "Whitefly (Bemisia tabaci — vector for CLCV)",
+          "chemical": "Diafenthiuron 50 WP @ 1 g/L (rotate with Spiromesifen 22.9 SC)",
+          "bio": "Yellow sticky traps @ 8/acre + neem oil 5% spray"
+        },
+        {
+          "pest": "Thrips (Thrips tabaci)",
+          "chemical": "Fipronil 5 SC @ 2 ml/L",
+          "bio": "Beauveria bassiana @ 2.5 kg/ha"
+        }
+      ]
+    },
+    "Sugarcane": {
+      "baseline_yield_qph": 700,
+      "npk_deficiency": {
+        "N_low": {
+          "symptom": "Light green to yellow older leaves, reduced tillering",
+          "remedy": "Urea @ 75 kg/acre. Apply in 3 splits across growing season."
+        },
+        "P_low": {
+          "symptom": "Stunted growth, poor root development",
+          "remedy": "SSP @ 50 kg/acre at planting"
+        },
+        "K_low": {
+          "symptom": "Reddening of leaves, poor juice quality",
+          "remedy": "MOP @ 50 kg/acre + SOP (Sulphate of Potash) for quality cane"
+        }
+      },
+      "weather_stress": {
+        "high_temp": {
+          "threshold": 38,
+          "remedy": "Drip irrigation with micro-climate cooling. Trash mulching."
+        },
+        "low_rainfall": {
+          "threshold": 100,
+          "remedy": "Deficit irrigation scheduling: irrigate at 50% available soil moisture depletion."
+        }
+      },
+      "pest_interventions": [
+        {
+          "pest": "Early Shoot Borer (Chilo infuscatellus)",
+          "chemical": "Chlorpyriphos 20 EC @ 5 L/ha soil application",
+          "bio": "Trichogramma chilonis + release of Cotesia flavipes parasitoid"
+        },
+        {
+          "pest": "Pyrilla (Pyrilla perpusilla)",
+          "chemical": "Thiamethoxam 25 WG @ 100 g/ha",
+          "bio": "Epiricania melanoleuca (egg parasitoid) release"
+        }
+      ]
+    },
+    "Groundnut": {
+      "baseline_yield_qph": 18,
+      "npk_deficiency": {
+        "N_low": {
+          "symptom": "Yellowing, poor nodulation (Rhizobium dependent)",
+          "remedy": "Rhizobium + PSB seed inoculation. Foliar urea 1% at 30 DAS if no nodulation."
+        },
+        "P_low": {
+          "symptom": "Poor pod development, reduced oil content",
+          "remedy": "SSP @ 30 kg/acre + gypsum @ 200 kg/acre at pegging stage"
+        },
+        "K_low": {
+          "symptom": "Empty pods, poor seed filling",
+          "remedy": "MOP @ 20 kg/acre"
+        }
+      },
+      "weather_stress": {
+        "high_temp": {
+          "threshold": 38,
+          "remedy": "Mulching + irrigation at critical stages (flowering, pegging, pod filling)."
+        },
+        "low_rainfall": {
+          "threshold": 60,
+          "remedy": "Sprinkler irrigation. Anti-transpirant spray at pod filling."
+        }
+      },
+      "pest_interventions": [
+        {
+          "pest": "Tikka Disease (Cercospora arachidicola)",
+          "chemical": "Mancozeb 75 WP @ 2 g/L",
+          "bio": "Trichoderma viride seed treatment @ 4 g/kg seed"
+        },
+        {
+          "pest": "Spodoptera litura",
+          "chemical": "Indoxacarb 14.5 SC @ 1 ml/L",
+          "bio": "NPV (Nuclear Polyhedrosis Virus) @ 250 LE/ha"
+        }
+      ]
+    }
+  }
+}

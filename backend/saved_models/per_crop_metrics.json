@@ -1,0 +1,134 @@
+{
+  "Rice": {
+    "classical": {
+      "test_r2": 0.4475,
+      "test_mse": 9.019,
+      "train_time_s": 0.2,
+      "train_samples": 400
+    },
+    "quantum": {
+      "test_r2": -3.9185,
+      "test_mse": 75.2071,
+      "train_time_s": 211.16,
+      "train_samples": 150,
+      "n_qubits": 4,
+      "reps": 2,
+      "feature_map": "ZZFeatureMap"
+    },
+    "yield_range": {
+      "min": 40.73,
+      "mean": 53.55,
+      "max": 65.07
+    }
+  },
+  "Wheat": {
+    "classical": {
+      "test_r2": 0.549,
+      "test_mse": 5.4921,
+      "train_time_s": 0.2,
+      "train_samples": 400
+    },
+    "quantum": {
+      "test_r2": -2.8882,
+      "test_mse": 46.6641,
+      "train_time_s": 229.49,
+      "train_samples": 150,
+      "n_qubits": 4,
+      "reps": 2,
+      "feature_map": "ZZFeatureMap"
+    },
+    "yield_range": {
+      "min": 35.2,
+      "mean": 43.64,
+      "max": 54.69
+    }
+  },
+  "Maize": {
+    "classical": {
+      "test_r2": -0.2305,
+      "test_mse": 18.7315,
+      "train_time_s": 0.17,
+      "train_samples": 400
+    },
+    "quantum": {
+      "test_r2": -2.8804,
+      "test_mse": 66.7246,
+      "train_time_s": 226.31,
+      "train_samples": 150,
+      "n_qubits": 4,
+      "reps": 2,
+      "feature_map": "ZZFeatureMap"
+    },
+    "yield_range": {
+      "min": 38.12,
+      "mean": 48.63,
+      "max": 58.76
+    }
+  },
+  "Cotton": {
+    "classical": {
+      "test_r2": 0.3198,
+      "test_mse": 2.1377,
+      "train_time_s": 0.24,
+      "train_samples": 400
+    },
+    "quantum": {
+      "test_r2": -4.1781,
+      "test_mse": 15.0931,
+      "train_time_s": 222.37,
+      "train_samples": 150,
+      "n_qubits": 4,
+      "reps": 2,
+      "feature_map": "ZZFeatureMap"
+    },
+    "yield_range": {
+      "min": 12.99,
+      "mean": 18.45,
+      "max": 25.49
+    }
+  },
+  "Sugarcane": {
+    "classical": {
+      "test_r2": 0.4013,
+      "test_mse": 1534.2781,
+      "train_time_s": 0.11,
+      "train_samples": 400
+    },
+    "quantum": {
+      "test_r2": -2.9957,
+      "test_mse": 11443.5066,
+      "train_time_s": 227.71,
+      "train_samples": 150,
+      "n_qubits": 4,
+      "reps": 2,
+      "feature_map": "ZZFeatureMap"
+    },
+    "yield_range": {
+      "min": 561.85,
+      "mean": 696.58,
+      "max": 816.09
+    }
+  },
+  "Groundnut": {
+    "classical": {
+      "test_r2": -0.0478,
+      "test_mse": 2.5351,
+      "train_time_s": 0.26,
+      "train_samples": 400
+    },
+    "quantum": {
+      "test_r2": -5.5984,
+      "test_mse": 17.8586,
+      "train_time_s": 225.19,
+      "train_samples": 150,
+      "n_qubits": 4,
+      "reps": 2,
+      "feature_map": "ZZFeatureMap"
+    },
+    "yield_range": {
+      "min": 12.2,
+      "mean": 16.88,
+      "max": 22.86
+    }
+  }
+}

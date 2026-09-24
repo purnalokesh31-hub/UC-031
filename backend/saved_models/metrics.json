@@ -1,0 +1,19 @@
+{
+  "classical": {
+    "test_mse": 262.03225000000003,
+    "test_r2": 0.2398833333333333,
+    "train_time": 1.18,
+    "train_samples": 2400,
+    "mode": "per_crop_v2"
+  },
+  "quantum": {
+    "test_mse": 1944.1756833333332,
+    "test_r2": -3.7432166666666666,
+    "train_time": 1342.23,
+    "train_samples": 900,
+    "n_qubits": 4,
+    "reps": 2,
+    "feature_map": "ZZFeatureMap",
+    "mode": "per_crop_v2"
+  }
+}

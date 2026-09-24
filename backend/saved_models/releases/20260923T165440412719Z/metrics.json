@@ -1,0 +1,482 @@
+{
+  "Rice": {
+    "classical": {
+      "test_r2": 0.9127194369725621,
+      "test_mse": 1.2371941919964888,
+      "test_rmse": 1.1122923140957546,
+      "test_mae": 0.9021897609564951,
+      "name": "Spline + quadratic Ridge",
+      "cv_rmse": 1.2825520034581266,
+      "interval_radius_qph": 1.8611643370833093,
+      "interval_level": 0.9,
+      "test_interval_coverage": 0.92,
+      "train_samples": 300,
+      "calibration_samples": 100,
+      "test_samples": 100,
+      "train_time_s": 57.18114139999943
+    },
+    "quantum": {
+      "test_r2": 0.9123390681916487,
+      "test_mse": 1.2425858855218257,
+      "test_rmse": 1.1147133647363459,
+      "test_mae": 0.8971064698868298,
+      "name": "Exact quantum kernel ridge (4 qubits, 2 encoding layers)",
+      "cv_rmse": 1.3076408593891384,
+      "interval_radius_qph": 1.8461935358467798,
+      "interval_level": 0.9,
+      "test_interval_coverage": 0.89,
+      "train_samples": 300,
+      "calibration_samples": 100,
+      "test_samples": 100,
+      "train_time_s": 4.9537835000001,
+      "n_qubits": 4,
+      "reps": 2,
+      "feature_map": "RY/RZ all 8 features with CNOT chain per layer",
+      "kernel_centered": true,
+      "simulator": "exact statevector"
+    },
+    "selected_family": "classical",
+    "bounds": {
+      "N": [
+        80.29,
+        119.7
+      ],
+      "P": [
+        40.08,
+        59.97
+      ],
+      "K": [
+        40.01,
+        59.97
+      ],
+      "pH": [
+        5.52,
+        7.0
+      ],
+      "moisture": [
+        60.12,
+        84.94
+      ],
+      "temperature": [
+        22.01,
+        31.99
+      ],
+      "humidity": [
+        75.01,
+        89.99
+      ],
+      "rainfall": [
+        200.1,
+        349.65
+      ]
+    },
+    "scope": "Synthetic demo data; no field validation",
+    "crop_type": "Rice",
+    "mean_baseline": {
+      "test_r2": -0.0329801914824277,
+      "test_mse": 14.642402031111128,
+      "test_rmse": 3.826539171511397,
+      "test_mae": 3.0427933333333343
+    }
+  },
+  "Wheat": {
+    "classical": {
+      "test_r2": 0.9383711261247286,
+      "test_mse": 0.8446594094391875,
+      "test_rmse": 0.9190535400286468,
+      "test_mae": 0.7537501603262268,
+      "name": "Quadratic Ridge",
+      "cv_rmse": 0.9927693909651631,
+      "interval_radius_qph": 1.71997873704683,
+      "interval_level": 0.9,
+      "test_interval_coverage": 0.94,
+      "train_samples": 300,
+      "calibration_samples": 100,
+      "test_samples": 100,
+      "train_time_s": 45.030551200000446
+    },
+    "quantum": {
+      "test_r2": 0.9305420567473064,
+      "test_mse": 0.9519613395405794,
+      "test_rmse": 0.9756850616569772,
+      "test_mae": 0.7814393170034694,
+      "name": "Exact quantum kernel ridge (4 qubits, 2 encoding layers)",
+      "cv_rmse": 0.993781088703127,
+      "interval_radius_qph": 1.645333258083717,
+      "interval_level": 0.9,
+      "test_interval_coverage": 0.93,
+      "train_samples": 300,
+      "calibration_samples": 100,
+      "test_samples": 100,
+      "train_time_s": 5.376987699999518,
+      "n_qubits": 4,
+      "reps": 2,
+      "feature_map": "RY/RZ all 8 features with CNOT chain per layer",
+      "kernel_centered": true,
+      "simulator": "exact statevector"
+    },
+    "selected_family": "classical",
+    "bounds": {
+      "N": [
+        100.09,
+        139.73
+      ],
+      "P": [
+        50.13,
+        69.96
+      ],
+      "K": [
+        30.09,
+        49.9
+      ],
+      "pH": [
+        6.01,
+        7.49
+      ],
+      "moisture": [
+        45.07,
+        64.94
+      ],
+      "temperature": [
+        15.05,
+        24.98
+      ],
+      "humidity": [
+        50.11,
+        70.0
+      ],
+      "rainfall": [
+        80.27,
+        149.99
+      ]
+    },
+    "scope": "Synthetic demo data; no field validation",
+    "crop_type": "Wheat",
+    "mean_baseline": {
+      "test_r2": -0.0001303462692276991,
+      "test_mse": 13.70736563111111,
+      "test_rmse": 3.702345963184844,
+      "test_mae": 3.019021333333333
+    }
+  },
+  "Maize": {
+    "classical": {
+      "test_r2": 0.9148690908248327,
+      "test_mse": 1.1212274509170062,
+      "test_rmse": 1.058880281673526,
+      "test_mae": 0.8146096819682177,
+      "name": "Quadratic Ridge",
+      "cv_rmse": 1.2066218250290335,
+      "interval_radius_qph": 1.9293112267211896,
+      "interval_level": 0.9,
+      "test_interval_coverage": 0.91,
+      "train_samples": 300,
+      "calibration_samples": 100,
+      "test_samples": 100,
+      "train_time_s": 62.57969479999974
+    },
+    "quantum": {
+      "test_r2": 0.9211087298596599,
+      "test_mse": 1.039047492574658,
+      "test_rmse": 1.0193367905528858,
+      "test_mae": 0.786832287168885,
+      "name": "Exact quantum kernel ridge (4 qubits, 2 encoding layers)",
+      "cv_rmse": 1.2171864921869753,
+      "interval_radius_qph": 1.9688590569332831,
+      "interval_level": 0.9,
+      "test_interval_coverage": 0.91,
+      "train_samples": 300,
+      "calibration_samples": 100,
+      "test_samples": 100,
+      "train_time_s": 5.9831810000005134,
+      "n_qubits": 4,
+      "reps": 2,
+      "feature_map": "RY/RZ all 8 features with CNOT chain per layer",
+      "kernel_centered": false,
+      "simulator": "exact statevector"
+    },
+    "selected_family": "classical",
+    "bounds": {
+      "N": [
+        120.22,
+        159.82
+      ],
+      "P": [
+        60.07,
+        79.9
+      ],
+      "K": [
+        50.01,
+        69.94
+      ],
+      "pH": [
+        5.8,
+        7.19
+      ],
+      "moisture": [
+        50.05,
+        69.83
+      ],
+      "temperature": [
+        25.02,
+        34.97
+      ],
+      "humidity": [
+        55.09,
+        74.99
+      ],
+      "rainfall": [
+        100.12,
+        199.97
+      ]
+    },
+    "scope": "Synthetic demo data; no field validation",
+    "crop_type": "Maize",
+    "mean_baseline": {
+      "test_r2": -0.00848697467309445,
+      "test_mse": 13.282405777777775,
+      "test_rmse": 3.6445035022315144,
+      "test_mae": 3.006946666666667
+    }
+  },
+  "Cotton": {
+    "classical": {
+      "test_r2": 0.923931535888914,
+      "test_mse": 0.22375944239258133,
+      "test_rmse": 0.47303217902440986,
+      "test_mae": 0.3897290880804246,
+      "name": "Quadratic Ridge",
+      "cv_rmse": 0.47466539225762394,
+      "interval_radius_qph": 0.7861004088251491,
+      "interval_level": 0.9,
+      "test_interval_coverage": 0.89,
+      "train_samples": 300,
+      "calibration_samples": 100,
+      "test_samples": 100,
+      "train_time_s": 64.5203490999993
+    },
+    "quantum": {
+      "test_r2": 0.9077963272010066,
+      "test_mse": 0.27122201891603614,
+      "test_rmse": 0.5207898030069676,
+      "test_mae": 0.41322733420356245,
+      "name": "Exact quantum kernel ridge (4 qubits, 2 encoding layers)",
+      "cv_rmse": 0.4938720810890843,
+      "interval_radius_qph": 0.7966253961267178,
+      "interval_level": 0.9,
+      "test_interval_coverage": 0.86,
+      "train_samples": 300,
+      "calibration_samples": 100,
+      "test_samples": 100,
+      "train_time_s": 5.728863799999999,
+      "n_qubits": 4,
+      "reps": 2,
+      "feature_map": "RY/RZ all 8 features with CNOT chain per layer",
+      "kernel_centered": false,
+      "simulator": "exact statevector"
+    },
+    "selected_family": "classical",
+    "bounds": {
+      "N": [
+        60.11,
+        99.82
+      ],
+      "P": [
+        30.12,
+        49.96
+      ],
+      "K": [
+        30.0,
+        59.96
+      ],
+      "pH": [
+        6.0,
+        7.99
+      ],
+      "moisture": [
+        40.02,
+        59.98
+      ],
+      "temperature": [
+        28.0,
+        37.98
+      ],
+      "humidity": [
+        40.02,
+        64.84
+      ],
+      "rainfall": [
+        80.07,
+        159.99
+      ]
+    },
+    "scope": "Synthetic demo data; no field validation",
+    "crop_type": "Cotton",
+    "mean_baseline": {
+      "test_r2": -0.011892175354720314,
+      "test_mse": 2.976534777777778,
+      "test_rmse": 1.7252636835503663,
+      "test_mae": 1.4110439999999997
+    }
+  },
+  "Sugarcane": {
+    "classical": {
+      "test_r2": 0.9081802893456725,
+      "test_mse": 246.2612631736676,
+      "test_rmse": 15.692713696925322,
+      "test_mae": 13.231718112195008,
+      "name": "SVR",
+      "cv_rmse": 15.771967718229856,
+      "interval_radius_qph": 23.658803515038926,
+      "interval_level": 0.9,
+      "test_interval_coverage": 0.86,
+      "train_samples": 300,
+      "calibration_samples": 100,
+      "test_samples": 100,
+      "train_time_s": 59.64686100000017
+    },
+    "quantum": {
+      "test_r2": 0.9189343495025551,
+      "test_mse": 217.41878022956882,
+      "test_rmse": 14.745127338533527,
+      "test_mae": 12.192635512928646,
+      "name": "Exact quantum kernel ridge (4 qubits, 2 encoding layers)",
+      "cv_rmse": 15.705897332367886,
+      "interval_radius_qph": 22.333578229096133,
+      "interval_level": 0.9,
+      "test_interval_coverage": 0.87,
+      "train_samples": 300,
+      "calibration_samples": 100,
+      "test_samples": 100,
+      "train_time_s": 8.490878399999929,
+      "n_qubits": 4,
+      "reps": 2,
+      "feature_map": "RY/RZ all 8 features with CNOT chain per layer",
+      "kernel_centered": true,
+      "simulator": "exact statevector"
+    },
+    "selected_family": "quantum",
+    "bounds": {
+      "N": [
+        150.15,
+        199.81
+      ],
+      "P": [
+        60.11,
+        89.88
+      ],
+      "K": [
+        80.08,
+        119.92
+      ],
+      "pH": [
+        6.01,
+        7.49
+      ],
+      "moisture": [
+        65.09,
+        84.86
+      ],
+      "temperature": [
+        25.05,
+        35.0
+      ],
+      "humidity": [
+        65.01,
+        84.95
+      ],
+      "rainfall": [
+        150.14,
+        299.22
+      ]
+    },
+    "scope": "Synthetic demo data; no field validation",
+    "crop_type": "Sugarcane",
+    "mean_baseline": {
+      "test_r2": -5.438948460323445e-05,
+      "test_mse": 2682.154577071111,
+      "test_rmse": 51.789521884944165,
+      "test_mae": 42.60204533333333
+    }
+  },
+  "Groundnut": {
+    "classical": {
+      "test_r2": 0.9429504020291112,
+      "test_mse": 0.1322787229499614,
+      "test_rmse": 0.36370142005491457,
+      "test_mae": 0.2943856254641306,
+      "name": "Quadratic Ridge",
+      "cv_rmse": 0.4344775117826405,
+      "interval_radius_qph": 0.9456781064064845,
+      "interval_level": 0.9,
+      "test_interval_coverage": 1.0,
+      "train_samples": 300,
+      "calibration_samples": 100,
+      "test_samples": 100,
+      "train_time_s": 64.86836790000052
+    },
+    "quantum": {
+      "test_r2": 0.9223962406575132,
+      "test_mse": 0.17993687154777951,
+      "test_rmse": 0.4241896645933037,
+      "test_mae": 0.34245373285835895,
+      "name": "Exact quantum kernel ridge (4 qubits, 2 encoding layers)",
+      "cv_rmse": 0.5056838561441738,
+      "interval_radius_qph": 0.8152392734470624,
+      "interval_level": 0.9,
+      "test_interval_coverage": 0.95,
+      "train_samples": 300,
+      "calibration_samples": 100,
+      "test_samples": 100,
+      "train_time_s": 5.455438199999662,
+      "n_qubits": 4,
+      "reps": 2,
+      "feature_map": "RY/RZ all 8 features with CNOT chain per layer",
+      "kernel_centered": true,
+      "simulator": "exact statevector"
+    },
+    "selected_family": "classical",
+    "bounds": {
+      "N": [
+        20.16,
+        40.0
+      ],
+      "P": [
+        40.02,
+        60.0
+      ],
+      "K": [
+        60.04,
+        79.79
+      ],
+      "pH": [
+        5.5,
+        7.0
+      ],
+      "moisture": [
+        45.2,
+        64.95
+      ],
+      "temperature": [
+        25.09,
+        34.98
+      ],
+      "humidity": [
+        45.03,
+        64.89
+      ],
+      "rainfall": [
+        80.11,
+        149.99
+      ]
+    },
+    "scope": "Synthetic demo data; no field validation",
+    "crop_type": "Groundnut",
+    "mean_baseline": {
+      "test_r2": -0.029665302952374795,
+      "test_mse": 2.387445594444446,
+      "test_rmse": 1.5451361087116067,
+      "test_mae": 1.2075633333333335
+    }
+  }
+}
