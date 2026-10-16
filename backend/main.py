@@ -68,7 +68,7 @@ app.add_middleware(
 # ── Disease Detection Module ──────────────────────────────────────────── #
 try:
     from database.disease_db   import DiseaseDB
-    from disease_engine.inference import engine as disease_engine, SUPPORTED_CROPS, InvalidImageError
+    from disease_engine.inference import engine as disease_engine, InvalidImageError
     from disease_engine.active_learning import active_learner
 
     _disease_db = DiseaseDB()
@@ -145,6 +145,14 @@ class PredictRequest(BaseModel):
         if value.strip().casefold() not in names:
             raise ValueError("Unsupported crop; choose " + ", ".join(CROPS))
         return names[value.strip().casefold()]
+
+
+from workspace_api import router as workspace_router, quantum_trace
+app.include_router(workspace_router)
+
+@app.post("/quantum/walkthrough")
+def walkthrough(req: PredictRequest):
+    return quantum_trace(req.crop_type, req.model_dump())
 
 
 def get_metrics():
@@ -270,7 +278,7 @@ async def disease_scan(file: UploadFile = File(...)):
         cached["class_name"] = cached.get("predicted_class", "")
         cached["used_local"] = bool(cached.get("used_local_model"))
         cached["is_healthy"] = bool(cached.get("is_healthy"))
-        cached["supported_crops"] = SUPPORTED_CROPS
+        cached["supported_crops"] = disease_engine.supported_crops
         return JSONResponse(content=cached)
 
     # ── Run inference ───────────────────────────────────────────────────── #
@@ -325,7 +333,7 @@ async def disease_scan(file: UploadFile = File(...)):
 
     result["scan_id"]       = scan_id
     result["from_cache"]    = False
-    result["supported_crops"] = SUPPORTED_CROPS if _DISEASE_MODULE else []
+    result["supported_crops"] = disease_engine.supported_crops if _DISEASE_MODULE else []
     return JSONResponse(content=result)
 
 
@@ -415,9 +423,10 @@ def engine_status():
         "module_available":    _DISEASE_MODULE,
         "inference_mode":      disease_engine.mode,
         "model_ready":         disease_engine.ready,
+        "class_count":         disease_engine.class_count,
         "model_h5_exists":     model_h5_exists,
         "model_onnx_exists":   model_onnx_exists,
         "model_tflite_exists": model_tfl_exists,
-        "supported_crops":     SUPPORTED_CROPS,
+        "supported_crops":     disease_engine.supported_crops,
         "setup_command":       setup_command,
     }

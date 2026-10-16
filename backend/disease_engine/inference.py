@@ -95,6 +95,19 @@ CLASS_NAMES = [
     "Tomato___healthy",
 ]
 
+# The retraining pipeline appends these 22 classes in this exact order while
+# preserving the existing PlantVillage 38-class indices.
+CLASS_NAMES_60 = CLASS_NAMES + [
+    "Rice___Brown_Spot", "Rice___Hispa", "Rice___Leaf_Blast",
+    "Rice___Neck_Blast", "Rice___healthy",
+    "Wheat___Brown_Rust", "Wheat___Loose_Smut", "Wheat___Yellow_Rust", "Wheat___healthy",
+    "Cotton___Bacterial_Blight", "Cotton___Curl_Virus", "Cotton___Fusarium_Wilt", "Cotton___healthy",
+    "Sugarcane___Bacterial_Blight", "Sugarcane___Red_Rot", "Sugarcane___Rust",
+    "Sugarcane___Yellow_Disease", "Sugarcane___healthy",
+    "Groundnut___Early_Leaf_Spot", "Groundnut___Late_Leaf_Spot",
+    "Groundnut___Rust", "Groundnut___healthy",
+]
+
 # Human-readable English names
 ENGLISH_NAMES: dict[str, str] = {
     # ── Original PlantVillage 38 ─────────────────────────────────────── #
@@ -136,15 +149,57 @@ ENGLISH_NAMES: dict[str, str] = {
     "Tomato___Tomato_Yellow_Leaf_Curl_Virus":               "Tomato Yellow Leaf Curl Virus",
     "Tomato___Tomato_mosaic_virus":                         "Tomato Mosaic Virus",
     "Tomato___healthy":                                     "Healthy Tomato",
+    "Rice___Brown_Spot":                                    "Rice Brown Spot",
+    "Rice___Hispa":                                         "Rice Hispa",
+    "Rice___Leaf_Blast":                                    "Rice Leaf Blast",
+    "Rice___Neck_Blast":                                    "Rice Neck Blast",
+    "Rice___healthy":                                       "Healthy Rice",
+    "Wheat___Brown_Rust":                                   "Wheat Brown Rust",
+    "Wheat___Loose_Smut":                                   "Wheat Loose Smut",
+    "Wheat___Yellow_Rust":                                  "Wheat Yellow Rust",
+    "Wheat___healthy":                                      "Healthy Wheat",
+    "Cotton___Bacterial_Blight":                            "Cotton Bacterial Blight",
+    "Cotton___Curl_Virus":                                  "Cotton Curl Virus",
+    "Cotton___Fusarium_Wilt":                               "Cotton Fusarium Wilt",
+    "Cotton___healthy":                                     "Healthy Cotton",
+    "Sugarcane___Bacterial_Blight":                         "Sugarcane Bacterial Blight",
+    "Sugarcane___Red_Rot":                                  "Sugarcane Red Rot",
+    "Sugarcane___Rust":                                     "Sugarcane Rust",
+    "Sugarcane___Yellow_Disease":                           "Sugarcane Yellow Disease",
+    "Sugarcane___healthy":                                  "Healthy Sugarcane",
+    "Groundnut___Early_Leaf_Spot":                          "Groundnut Early Leaf Spot",
+    "Groundnut___Late_Leaf_Spot":                           "Groundnut Late Leaf Spot",
+    "Groundnut___Rust":                                     "Groundnut Rust",
+    "Groundnut___healthy":                                  "Healthy Groundnut",
 }
 
-# Crop species represented in the checked-in model's 38 class outputs.
-SUPPORTED_CROPS = [
-    "Apple", "Blueberry", "Cherry", "Corn", "Grape", "Orange", "Peach",
-    "Bell Pepper", "Potato", "Raspberry", "Soybean", "Squash", "Strawberry", "Tomato",
-]
+# Retain the shipped model's historical width while explicitly supporting the
+# separate 60-class export defined by training/train_disease_model.py.
 MODEL_CLASS_COUNT = 38
-assert len(CLASS_NAMES) == MODEL_CLASS_COUNT, "Class labels must match the shipped model output."
+CLASS_NAMES_BY_COUNT = {38: CLASS_NAMES, 60: CLASS_NAMES_60}
+assert len(CLASS_NAMES) == MODEL_CLASS_COUNT and len(CLASS_NAMES_60) == 60
+
+
+def class_names_for_count(count: int) -> list[str]:
+    """Return the exact labels for a supported model output width."""
+    try:
+        return CLASS_NAMES_BY_COUNT[count]
+    except KeyError as exc:
+        raise ValueError(f"Unsupported disease model output size: {count} classes.") from exc
+
+
+def supported_crops_for_count(count: int) -> list[str]:
+    """Return crops represented by the model's output labels, in label order."""
+    crops = []
+    for class_name in class_names_for_count(count):
+        crop = class_name.split("___", 1)[0]
+        crop = {"Corn_(maize)": "Corn", "Pepper,_bell": "Bell Pepper"}.get(crop, crop)
+        if crop not in crops:
+            crops.append(crop)
+    return crops
+
+
+SUPPORTED_CROPS = supported_crops_for_count(MODEL_CLASS_COUNT)
 MAX_IMAGE_PIXELS = 40_000_000
 
 
@@ -163,6 +218,21 @@ def _confidence_tier(conf: float) -> str:
     if conf < TIER_UNCERTAIN: return "uncertain"
     if conf < TIER_MEDIUM:    return "medium"
     return "high"
+
+
+def _as_probabilities(values: np.ndarray) -> np.ndarray:
+    """Accept probability outputs or convert classifier logits with softmax."""
+    scores = np.asarray(values, dtype=np.float64).reshape(-1)
+    if scores.size == 0 or not np.isfinite(scores).all():
+        raise RuntimeError("Disease model returned empty or nonfinite scores.")
+    total = float(scores.sum())
+    if (np.all(scores >= 0) and np.all(scores <= 1)
+            and np.isclose(total, 1.0, rtol=1e-3, atol=1e-4)):
+        return scores.astype(np.float32)
+    shifted = scores - scores.max()
+    probabilities = np.exp(shifted)
+    probabilities /= probabilities.sum()
+    return probabilities.astype(np.float32)
 
 
 # ── Image preprocessing ───────────────────────────────────────────────── #
@@ -233,6 +303,7 @@ class DiseaseInferenceEngine:
         self._is_onnx     = False
         self._onnx_inp    = None
         self._onnx_out    = None
+        self._class_count = None
         self._tflite_inp  = None
         self._tflite_out  = None
         self._inference_lock = Lock()
@@ -277,7 +348,11 @@ class DiseaseInferenceEngine:
         if _BACKEND == "tensorflow":
             try:
                 import tensorflow as tf
-                self.model    = tf.keras.models.load_model(str(model_path), compile=False)
+                model = tf.keras.models.load_model(str(model_path), compile=False)
+                class_count = int(model.output_shape[-1])
+                class_names_for_count(class_count)
+                self.model    = model
+                self._class_count = class_count
                 self._backend = "tensorflow"
                 self._is_tflite = False
                 self._is_onnx   = False
@@ -306,12 +381,17 @@ class DiseaseInferenceEngine:
             sess_options=sess_opts,
             providers=["CPUExecutionProvider"],
         )
+        class_count = session.get_outputs()[0].shape[-1]
+        if not isinstance(class_count, int):
+            raise ValueError("Disease model must expose a fixed output class count.")
+        class_names_for_count(class_count)
         self.model    = session
         self._backend = "onnxruntime"
         self._is_onnx = True
         self._is_tflite = False
         self._onnx_inp  = session.get_inputs()[0].name
         self._onnx_out  = session.get_outputs()[0].name
+        self._class_count = class_count
         print(f"[DiseaseEngine] [OK] ONNX model loaded: {model_path.name}")
 
     def _load_tflite(self, model_path: Path):
@@ -324,12 +404,15 @@ class DiseaseInferenceEngine:
             interp = tf.lite.Interpreter(model_path=str(model_path))
 
         interp.allocate_tensors()
+        class_count = int(interp.get_output_details()[0]["shape"][-1])
+        class_names_for_count(class_count)
         self.model       = interp
         self._backend    = "tflite"
         self._is_tflite  = True
         self._is_onnx    = False
         self._tflite_inp = interp.get_input_details()[0]["index"]
         self._tflite_out = interp.get_output_details()[0]["index"]
+        self._class_count = class_count
         print(f"[DiseaseEngine] [OK] TFLite model loaded: {model_path.name}")
 
 
@@ -342,6 +425,16 @@ class DiseaseInferenceEngine:
         if not self.ready:
             return "not_ready"
         return self._backend
+
+    @property
+    def class_count(self) -> Optional[int]:
+        return self._class_count
+
+    @property
+    def supported_crops(self) -> list[str]:
+        if self._class_count is None:
+            return []
+        return supported_crops_for_count(self._class_count)
 
     # ── Unified predict ───────────────────────────────────────────────── #
     def predict(self, image_bytes: bytes) -> dict:
@@ -378,20 +471,21 @@ class DiseaseInferenceEngine:
         else:
             preds = self.model.predict(arr, verbose=0)[0]
 
-        if np.asarray(preds).size != MODEL_CLASS_COUNT:
-            raise RuntimeError(
-                f"Disease model returned {np.asarray(preds).size} classes; expected {MODEL_CLASS_COUNT}."
-            )
+        preds = _as_probabilities(preds)
+        try:
+            class_names = class_names_for_count(preds.size)
+        except ValueError as exc:
+            raise RuntimeError(str(exc)) from exc
 
         top3 = np.argsort(preds)[-3:][::-1]
-        best_class = CLASS_NAMES[top3[0]]
+        best_class = class_names[top3[0]]
         best_conf  = float(round(preds[top3[0]] * 100, 2))
         tier       = _confidence_tier(best_conf)
 
         top_3_list = [
             {
-                "class_name":   CLASS_NAMES[i],
-                "english_name": ENGLISH_NAMES.get(CLASS_NAMES[i], CLASS_NAMES[i]),
+                "class_name":   class_names[i],
+                "english_name": ENGLISH_NAMES.get(class_names[i], class_names[i]),
                 "confidence":   float(round(preds[i] * 100, 2)),
             }
             for i in top3
@@ -417,7 +511,7 @@ class DiseaseInferenceEngine:
             [self._onnx_out],
             {self._onnx_inp: arr},
         )
-        return outputs[0][0]   # shape [38]
+        return outputs[0][0]
 
     def _run_tflite(self, arr: np.ndarray) -> np.ndarray:
         """Run TFLite interpreter on a preprocessed image array."""

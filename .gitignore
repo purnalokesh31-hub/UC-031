@@ -11,8 +11,14 @@ frontend/node_modules/
 frontend/dist/
 frontend/*.timestamp-*.mjs
 *.db
+*.db-shm
+*.db-wal
 *.sqlite*
 backend/data/scan_images/
 backend/saved_models/releases/*
 !backend/saved_models/releases/20260923T165440412719Z/
 !backend/saved_models/releases/20260923T165440412719Z/**
+research/data/raw/
+research/data/processed/
+
+backend/data/weather_cache/

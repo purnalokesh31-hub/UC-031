@@ -1,13 +1,15 @@
 # CropGuard AI — Disease Model Training Guide
 
-## What was updated
+## Current model and planned retraining
 
-The disease detection model now covers **60 disease classes across 16 crops**:
+The checked-in ONNX/H5 classifier has **38 PlantVillage classes across 14 crops**. The separate retraining script defines a 60-class output: those 38 classes plus 22 classes for rice, wheat, cotton, sugarcane, and groundnut (19 crop names total; maize is already represented as Corn in PlantVillage). The 60-class dataset and model are not present in this workspace, so the 60-class model has not been trained or validated here.
 
 | Crop Group | Crops | Classes |
 |---|---|---|
-| 🌾 **AP Yield Predictor** | Rice, Wheat, Maize/Corn, Cotton, Sugarcane, Groundnut | 22 new |
-| 🌱 **PlantVillage** | Tomato, Potato, Bell Pepper, Apple, Grape, Peach, Strawberry, Squash, Soybean, Orange | 38 original |
+| Crop disease classes added by the training script | Rice, Wheat, Cotton, Sugarcane, Groundnut | 22 |
+| PlantVillage classes already in the shipped model | 14 crop names, including Corn/Maize | 38 |
+
+The inference service accepts both the shipped 38-output model and the script's 60-output model, and reports the active model's output class count. Its confidence tiers are thresholds on model scores, not calibration or field-accuracy guarantees.
 
 ---
 
@@ -112,11 +114,9 @@ ONNX opset 17  (Python 3.14 + onnxruntime 1.29 compatible)
 - **Phase 2**: CosineAnnealingWarmRestarts (smooth fine-tune)
 - **Gradient clipping**: max_norm=1.0
 
-### Expected accuracy
-| Scope | Expected val accuracy |
-|---|---|
-| PlantVillage 38 classes | ~97-99% |
-| All 60 classes (multi-dataset) | ~92-96% |
+### Accuracy evidence required
+
+There is no measured accuracy claim for the checked-in classifier in this project. The training script's current random, per-class 85/15 image split is a training-validation split, not an independent field test; related images from the same source may appear on both sides. Do not use its best validation epoch as an estimate of deployment accuracy. Before making an accuracy claim, reserve independent images grouped by plant, capture session, farm, or source dataset; report per-class precision/recall, macro-F1, confusion matrix, and confidence calibration on that untouched set. Test on representative field images as well as the curated image sources.
 
 ---
 
