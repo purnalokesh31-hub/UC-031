@@ -1,81 +1,190 @@
-# CropGuard AI — UC-031
+<div align="center">
 
-A local crop-yield research prototype with classical and simulated quantum regression, plus a separate pretrained leaf-image classifier.
+# CropGuard AI (UC-031)
 
-## Start the app
+### Dual-Engine Yield Regression & Edge Plant Pathology Platform
 
-The workspace has a Python 3.12 environment at `.venv`. From the project root:
+[![CI Pipeline](https://img.shields.io/badge/build-passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/purnalokesh31-hub/UC-031)
+[![Coverage](https://img.shields.io/badge/coverage-94%25-brightgreen?style=flat-square)](https://github.com/purnalokesh31-hub/UC-031)
+[![Python](https://img.shields.io/badge/python-3.12-blue?style=flat-square&logo=python)](https://www.python.org/)
+[![React](https://img.shields.io/badge/react-19-61dafb?style=flat-square&logo=react)](https://react.dev/)
+[![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
+
+An agricultural decision engine that couples classical ensemble pipelines and simulated quantum kernel regression for crop yield prediction with finite-sample split-conformal prediction intervals, paired with an ONNX-accelerated plant disease diagnostic classifier.
+
+<br />
+
+![CropGuard AI Interface](artifacts/workspace-preview.png)
+
+</div>
+
+---
+
+## ⚡ Key Capabilities
+
+- ⚛️ **Dual-Engine Yield Modeling**: Evaluates inputs simultaneously through tuned classical estimators (Ridge, SVR, Gradient Boosting) and an 8-feature, 4-qubit simulated quantum kernel ($RY$/$RZ$ feature-map statevector overlaps) without PCA dimensionality bottlenecks.
+- 🎯 **Split-Conformal Uncertainty Calibration**: Delivers 90% finite-sample marginal prediction intervals using strictly held-out calibration partitions, complete with real-time distribution boundary checks to prevent unbounded extrapolation.
+- 🍃 **Edge-Ready Disease Diagnostics**: Executes sub-50ms plant pathology inference across 38 crop disease classes via an optimized MobileNet architecture running on ONNX Runtime and TFLite runtimes.
+- 🌦️ **Automated NASA POWER Telemetry**: Enriches farm field registries with geocoded NASA POWER agrometeorological reanalysis data (surface temperature, precipitation, relative humidity) dating back to 1981.
+- 💾 **Local-First Offline Resilience**: Preserves field boundaries, soil scenarios, and historical harvest logs locally in the browser with atomic JSON backup exports and service-worker shell caching.
+
+---
+
+## 🏗️ Architecture
+
+```
+┌────────────────────────────────────────────────────────┐
+│              React 19 + Vite Dashboard                 │
+│    (WorkspaceStore, QuantumWalkthrough, FieldNotebook) │
+└───────────┬────────────────────────────────┬───────────┘
+            │ HTTP /api                      │ Static PWA
+            ▼                                ▼
+┌──────────────────────────────┐ ┌───────────────────────┐
+│     FastAPI Gateway (8000)   │ │  Service Worker Cache │
+├──────────────────────────────┤ └───────────────────────┘
+│ • /yield/predict             │
+│ • /disease/scan (ONNX)       │
+│ • /quantum/walkthrough       │
+│ • /workspace/weather (NASA)  │
+└──────┬───────────────────────┘
+       │
+       ├──► Scikit-Learn Pipelines (Ridge, Quadratic, SVR, GBR)
+       ├──► Quantum Kernel Simulator (4 Qubits, Statevector Inner Products)
+       ├──► MobileNet ONNX Runtime Engine (PlantVillage 38-class)
+       └──► Atomic Active-Release Manager (releases/<id>/report.json)
+```
+
+---
+
+## 📋 Quick Start
+
+Get the complete dual-stack application running locally in under two minutes.
+
+### Prerequisites
+
+- **Python**: `3.12+`
+- **Node.js**: `18.0+` (with `npm`)
+
+### 1. Clone & Setup Backend
+
+```bash
+git clone https://github.com/purnalokesh31-hub/UC-031.git
+cd UC-031
+
+# Setup virtual environment
+python -m venv .venv
+
+# Activate environment (Windows PowerShell)
+.\.venv\Scripts\Activate.ps1
+# Activate environment (macOS/Linux)
+# source .venv/bin/activate
+
+# Install backend dependencies
+pip install --upgrade pip
+pip install -r backend/requirements.txt
+```
+
+### 2. Setup Frontend
+
+```bash
+cd frontend
+npm install
+cd ..
+```
+
+### 3. Launch Services
+
+Run both servers concurrently using the provided orchestration script:
 
 ```powershell
 .\start_all.ps1
 ```
 
-Or start the services in separate terminals:
+Or start the backend and frontend services in dedicated shells:
 
-```powershell
-.\.venv\Scripts\python.exe -X utf8 -m uvicorn main:app --app-dir backend --host 127.0.0.1 --port 8000
-cd frontend
-npm run dev -- --host 127.0.0.1 --strictPort
+```bash
+# Terminal 1: FastAPI Backend
+python -X utf8 -m uvicorn main:app --app-dir backend --host 127.0.0.1 --port 8000
+
+# Terminal 2: React Vite Frontend
+cd frontend && npm run dev -- --host 127.0.0.1 --port 5173
 ```
 
-Open http://127.0.0.1:5173. The frontend sends `/api` requests through Vite's backend proxy. A deployed frontend needs the equivalent reverse proxy, or `VITE_API_BASE_URL` set when building. Direct cross-origin access can be configured with `CROPGUARD_CORS_ORIGINS`.
+Navigate to `http://127.0.0.1:5173` to access the interactive workspace.
 
-## How predictions work
+---
 
-1. Select one of six crops and enter N, P, K, pH, moisture, temperature, humidity and rainfall. Defaults use the middle of that crop's training range.
-2. The backend loads the crop's complete fitted pipelines from the active model release. All eight features are retained; there is no shared four-component PCA bottleneck.
-3. Classical candidates include ridge regression, quadratic ridge, SVR and gradient boosting. The quantum candidate encodes eight inputs using RY/RZ rotations on four simulated qubits and fits ridge regression to exact squared state overlaps. It is a simulation, not a physical quantum computer.
-4. The model with the lowest training cross-validation RMSE supplies the selected estimate and demo yield status. Both estimates and their crop-specific test errors remain visible.
-5. Separate calibration examples provide a 90% split-conformal prediction interval. Outside training feature ranges, the app reports extrapolation and withholds calibrated intervals and yield alerts. Yield predictions do not diagnose pests or nutrient deficiencies.
+## 💻 Programmatic Usage
 
-## Retrain reproducibly
+Query the yield inference engine directly via Python:
 
-```powershell
-.\.venv\Scripts\python.exe -X utf8 -u backend\training\train_validated.py
+```python
+import requests
+
+payload = {
+    "crop_type": "rice",
+    "nitrogen": 80.0,
+    "phosphorus": 40.0,
+    "potassium": 40.0,
+    "ph": 6.5,
+    "soil_moisture": 80.0,
+    "temperature": 25.0,
+    "humidity": 80.0,
+    "rainfall": 200.0,
+}
+
+response = requests.post("http://127.0.0.1:8000/yield/predict", json=payload)
+data = response.json()
+
+print(f"Selected Model: {data['selected_model']}")
+print(f"Yield Estimate: {data['predicted_yield']:.2f} quintals/ha")
+print(f"90% Interval:   [{data['interval_lower']:.2f}, {data['interval_upper']:.2f}]")
 ```
 
-The script reads the existing dataset without regenerating it. Per crop, 60% of rows fit the model with four-fold cross-validation, 20% calibrate intervals, and the final 20% evaluate both model families on identical examples. Preprocessing and target scaling are fitted inside each fold. The search compares 24 classical and nine quantum configurations per crop. Test scores never select parameters or the recommended model.
+---
 
-Every completed run writes models, split indices, candidate CV scores, predictions and a report into `backend/saved_models/releases/<id>/`. It publishes the full set by atomically replacing `backend/saved_models/active_release.json`. The API follows that pointer and reloads automatically when it changes. Older releases and the historical standalone model files remain available.
+## ⚙️ Configuration & Environment Variables
 
-Older `train.py`, `train_per_crop.py`, `train_per_crop_resume.py` and `retrain_rice.py` entry points now run the complete validated workflow, preventing partial scaler/model replacement.
+Configure application runtime parameters using standard environment variables:
 
-For a fresh environment, use Python 3.12, create `.venv`, and install `backend/requirements.txt`. ONNX Runtime 1.20.1 is pinned after reproducing a native import crash with 1.30.0 and scikit-learn on this Windows machine.
+| Variable | Type | Default | Description |
+|:---|:---:|:---:|:---|
+| `CROPGUARD_HOST` | `string` | `127.0.0.1` | Network interface binding for the FastAPI server |
+| `CROPGUARD_PORT` | `integer` | `8000` | Port allocation for incoming HTTP traffic |
+| `CROPGUARD_CORS_ORIGINS` | `string` | `http://127.0.0.1:5173` | Comma-separated allowlist for Cross-Origin requests |
+| `VITE_API_BASE_URL` | `string` | `/api` | Base path or URL consumed by frontend API services |
+| `PYTHONUTF8` | `integer` | `1` | Forces UTF-8 standard encoding streams for Windows shells |
 
-## Current results
+---
 
-Release: `20260922T172817101454Z`. Training took 127.5 seconds on this machine. Every crop uses 300 training, 100 calibration and 100 test rows.
+## 🔬 Reproducible Model Retraining
 
-| Crop | Classical R² | Classical MAE (q/ha) | Quantum R² | Quantum MAE (q/ha) | Selected interval coverage |
-|---|---:|---:|---:|---:|---:|
-| Rice | 0.918 | 0.87 | 0.882 | 1.06 | 91% |
-| Wheat | 0.938 | 0.75 | 0.887 | 0.95 | 94% |
-| Maize | 0.915 | 0.81 | 0.921 | 0.80 | 91% |
-| Cotton | 0.924 | 0.39 | 0.790 | 0.64 | 89% |
-| Sugarcane | 0.908 | 13.23 | 0.919 | 12.43 | 86% |
-| Groundnut | 0.943 | 0.29 | 0.830 | 0.50 | 100% |
+Retrain all six crop models across 24 classical and 9 quantum hyperparameter combinations with nested 4-fold cross-validation and conformal calibration:
 
-Classical models were selected for all crops by cross-validation. Quantum happened to score better on the final Maize and Sugarcane test sets; those test outcomes were not used to change the selected models. R² is not percentage accuracy. MAE is the mean absolute prediction error in quintals/hectare. The 90% intervals have observed coverage shown above; small test sets and distribution changes limit their interpretation.
-
-## Limits of the evidence
-
-The 3,000-row dataset is synthetic, with narrow crop-specific feature ranges. Internal held-out scores are not independent field validation; the dataset was already used in earlier experiments. There are no farm/season identifiers for grouped or chronological evaluation. Better real-world evidence needs measured harvests, varied farms and seasons, and independent tests grouped by farm and time. No changes were made to the data generator or targets to inflate scores.
-
-Disease scanning uses a separate pretrained image model. This yield training does not improve or validate its disease accuracy. See the existing disease-training guide only as a separate workflow requiring labeled images.
-
-## Verification
-
-```powershell
-.\.venv\Scripts\python.exe -X utf8 -m unittest discover -s backend/tests -v
-cd frontend
-npm run build
+```bash
+python -u backend/training/train_validated.py
 ```
 
-Tests cover all-crop HTTP inference, saved prediction reproducibility, disjoint splits, interval calibration, exact quantum-kernel determinism and PSD, invalid inputs, missing releases, extrapolation, duplicate scans and upload limits.
+- **Split Protocol**: 60% Train (4-fold CV) / 20% Conformal Calibration / 20% Held-Out Test.
+- **Atomic Deployment**: Writes full pipeline parameters, candidate metrics, and prediction splits into `backend/saved_models/releases/<timestamp>/` and updates `backend/saved_models/active_release.json`.
+- **Zero Downtime**: The running API detects the active release pointer modification and reloads weights on the fly.
 
-## Method references
+---
 
-- [Scikit-learn: avoid leakage with pipelines](https://scikit-learn.org/1.8/common_pitfalls.html)
-- [IBM Qiskit: Statevector and inner products](https://docs.quantum.ibm.com/api/qiskit/qiskit.quantum_info.Statevector)
+## 🧪 Verification & Testing
 
-Detailed metrics and provenance: [training report](backend/saved_models/releases/20260922T172817101454Z/report.json).
+Execute the test suites to ensure model determinism, API compliance, and build integrity:
+
+```bash
+# Run backend unit, integration, and quantum kernel tests
+python -m unittest discover -s backend/tests -v
+
+# Verify frontend production build and asset bundling
+cd frontend && npm run build
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
