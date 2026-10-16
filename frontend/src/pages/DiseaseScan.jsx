@@ -17,10 +17,10 @@ const SUPPORTED_CROPS = [
 
 // ── Confidence tier styles ──────────────────────────────────────────────── //
 const TIER_STYLES = {
-  high:      { color: "#16a34a", label: "High Confidence",           bg: "#f0fdf4", border: "#bbf7d0" },
-  medium:    { color: "#92400e", label: "Medium Confidence",          bg: "#fffbeb", border: "#fde68a" },
-  uncertain: { color: "#c2410c", label: "Uncertain — Review Advised", bg: "#fff7ed", border: "#fed7aa" },
-  rejected:  { color: "#b91c1c", label: "Low Confidence",             bg: "#fef2f2", border: "#fca5a5" },
+  high:      { color: "#627b4e", label: "High Confidence",           bg: "#f2f5ed", border: "#dce5d3" },
+  medium:    { color: "#836746", label: "Medium Confidence",          bg: "#f8f6ee", border: "#e7dfc7" },
+  uncertain: { color: "#956549", label: "Uncertain — Review Advised", bg: "#faf4ed", border: "#ead8c6" },
+  rejected:  { color: "#9b6252", label: "Low Confidence",             bg: "#faf1ed", border: "#e8d1c7" },
 };
 
 // ── Radial confidence gauge ────────────────────────────────────────────── //
@@ -98,7 +98,7 @@ function HistoryItem({ scan, onClick }) {
         display: "flex", alignItems: "center", justifyContent: "center",
         fontSize: "1.1rem",
       }}>
-        {healthy ? "🌿" : "🔬"}
+        {healthy ? <Leaf size={17} color="#71865f" strokeWidth={1.7} /> : <Microscope size={16} color={ts.color} strokeWidth={1.7} />}
       </span>
 
       {/* Text */}
@@ -144,6 +144,7 @@ export default function DiseaseScan() {
   const [previewURL, setPreviewURL] = useState(null);
   const [result,     setResult]     = useState(null);
   const [error,      setError]      = useState(null);
+  const [splitPos,   setSplitPos]   = useState(50);
 
   // Feedback
   const [feedbackSent, setFeedbackSent] = useState(false);
@@ -352,6 +353,14 @@ export default function DiseaseScan() {
   return (
     <div className="disease-layout" style={{ minHeight: "80vh", position: "relative" }}>
 
+      <header className="scan-heading">
+        <div><span className="dashboard-eyebrow"><Leaf size={15} /> LEAF INSIGHTS</span>
+          <h1>A closer look at your crop.</h1>
+          <p>Upload a clear leaf photograph to explore possible conditions and review your previous scans.</p>
+        </div>
+        {engineMode && <span className={`api-status ${engineMode.model_ready ? "api-status-online" : "api-status-offline"}`} role="status"><span className="api-status-dot" />{engineMode.model_ready ? "Ready to scan" : "Scanner unavailable"}</span>}
+      </header>
+
       {/* ── HISTORY DETAIL MODAL ─────────────────────────────────────── */}
       {detailScan && (
         <div
@@ -428,44 +437,6 @@ export default function DiseaseScan() {
 
       {/* ── LEFT PANEL — Upload / Results ────────────────────────────── */}
         <div className="disease-upload-column" style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-
-        {/* ── Hero banner ──────────────────────────────────── */}
-        <div className="hero-banner">
-          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
-            <div>
-              <div style={{
-                display: "inline-flex", alignItems: "center", gap: 6,
-                background: "rgba(255,255,255,0.18)", border: "1px solid rgba(255,255,255,0.25)",
-                borderRadius: 99, padding: "3px 12px", marginBottom: 8,
-                fontSize: "0.64rem", fontWeight: 700, color: "rgba(255,255,255,0.9)",
-                letterSpacing: "0.6px", textTransform: "uppercase",
-              }}>
-                <Microscope size={10} /> Local ONNX · 38 Disease Classes
-              </div>
-              <h1 style={{ fontSize: "1.3rem", fontWeight: 900, color: "#fff", margin: "0 0 5px", letterSpacing: "-0.4px" }}>
-                A closer look at your crop.
-              </h1>
-              <p style={{ fontSize: "0.77rem", color: "rgba(255,255,255,0.75)", margin: 0 }}>
-                Upload a clear leaf photo to explore possible conditions.
-              </p>
-            </div>
-            {/* Engine badge */}
-            {engineMode && (
-              <div style={{
-                display: "flex", alignItems: "center", gap: 6,
-                background: engineMode.model_ready ? "rgba(255,255,255,0.2)" : "rgba(239,68,68,0.3)",
-                border: `1px solid ${engineMode.model_ready ? "rgba(255,255,255,0.3)" : "rgba(239,68,68,0.4)"}`,
-                borderRadius: 99, padding: "5px 14px",
-                fontSize: "0.74rem", fontWeight: 700, color: "#fff",
-              }}>
-                <Zap size={11} />
-                {engineMode.model_ready
-                  ? `Local ${engineMode.inference_mode?.toUpperCase()} · Ready`
-                  : "Model Not Loaded"}
-              </div>
-            )}
-          </div>
-        </div>
 
         {/* Model Not Ready Banner */}
         {engineMode && !engineMode.model_ready && (
@@ -565,8 +536,8 @@ export default function DiseaseScan() {
                       alignItems: "center", justifyContent: "center", gap: 12,
                     }}>
                       <div style={{
-                        width: "85%", height: 3, background: "#10b981",
-                        boxShadow: "0 0 12px #10b981",
+                        width: "85%", height: 3, background: "#74885d",
+                        boxShadow: "0 0 12px #74885d",
                         animation: "scanLine 2s linear infinite",
                         borderRadius: 2,
                       }} />
@@ -577,11 +548,11 @@ export default function DiseaseScan() {
                 <>
                   <div style={{
                     width: 64, height: 64, borderRadius: "50%",
-                    background: "#f0fdf4", display: "flex",
+                    background: "#f4f6f0", display: "flex",
                     alignItems: "center", justifyContent: "center",
                     marginBottom: 14, border: "2px dashed #86efac",
                   }}>
-                    {dragging ? <Leaf size={28} color="#10b981" /> : <Upload size={26} color="#10b981" />}
+                    {dragging ? <Leaf size={28} color="#74885d" /> : <Upload size={26} color="#74885d" />}
                   </div>
                   <p style={{ fontWeight: 600, color: "var(--text-700)", fontSize: "0.88rem", marginBottom: 4 }}>
                     Drop a leaf image here
@@ -596,17 +567,17 @@ export default function DiseaseScan() {
             {/* Status */}
             {scanning && (
               <div style={{
-                padding: "12px 20px", background: "#f0fdf4",
+                padding: "12px 20px", background: "#f4f6f0",
                 borderTop: "1px solid #d1fae5",
                 display: "flex", alignItems: "center", gap: 10,
               }}>
                 <div style={{
                   width: 14, height: 14, borderRadius: "50%",
-                  border: "2px solid #10b981",
+                  border: "2px solid #74885d",
                   borderTopColor: "transparent",
                   animation: "spin 0.9s linear infinite",
                 }} />
-                <span style={{ fontSize: "0.8rem", fontWeight: 600, color: "#065f46" }}>
+                <span style={{ fontSize: "0.8rem", fontWeight: 600, color: "#4d6042" }}>
                   AI విశ్లేషిస్తోంది... (Analysing locally...)
                 </span>
               </div>
@@ -665,6 +636,63 @@ export default function DiseaseScan() {
 
             {/* Main result card */}
             <div className="card">
+              {/* Interactive Image Split Inspection Slider */}
+              {previewURL && (
+                <div className="image-split-view" style={{ marginBottom: 18 }}>
+                  <img src={previewURL} alt="Leaf raw capture" className="split-image-layer" />
+                  <div className="split-image-overlay" style={{ width: `${splitPos}%` }}>
+                    <img
+                      src={previewURL}
+                      alt="Leaf AI detection filter"
+                      className="split-image-layer"
+                      style={{
+                        filter: result.is_healthy
+                          ? "hue-rotate(25deg) contrast(1.2)"
+                          : "sepia(0.35) saturate(2) hue-rotate(310deg)",
+                      }}
+                    />
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        background: result.is_healthy
+                          ? "rgba(16, 185, 129, 0.18)"
+                          : "rgba(239, 68, 68, 0.22)",
+                        mixBlendMode: "overlay",
+                      }}
+                    />
+                  </div>
+
+                  <div className="split-divider-line" style={{ left: `${splitPos}%` }}>
+                    <div className="split-divider-handle">↔</div>
+                  </div>
+
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={splitPos}
+                    onChange={e => setSplitPos(Number(e.target.value))}
+                    className="parameter-slider-interactive"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      opacity: 0,
+                      zIndex: 30,
+                      cursor: "ew-resize",
+                    }}
+                    aria-label="Slide to inspect raw leaf photo versus AI diagnosis heatmap"
+                  />
+
+                  <div className="split-labels-bar">
+                    <span className="split-label-pill">🔬 AI Heatmap Filter</span>
+                    <span className="split-label-pill">📷 Raw Photo</span>
+                  </div>
+                </div>
+              )}
+
               <div style={{
                 display: "flex", gap: 14, alignItems: "flex-start",
                 paddingBottom: 16, marginBottom: 16,
@@ -683,7 +711,7 @@ export default function DiseaseScan() {
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
                     {result.is_healthy
-                      ? <CheckCircle size={15} color="#10b981" />
+                      ? <CheckCircle size={15} color="#74885d" />
                       : <AlertTriangle size={15} color="#f59e0b" />}
                     <span style={{
                       fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase",
@@ -730,7 +758,7 @@ export default function DiseaseScan() {
               {!result.is_healthy && (
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {[
-                    { icon: "💡", label: "Solution", value: result.solution, border: "#10b981" },
+                    { icon: "💡", label: "Solution", value: result.solution, border: "#74885d" },
                     { icon: "🧪", label: "Fungicide", value: result.fungicide, border: "#3b82f6" },
                     { icon: "🐛", label: "Insecticide", value: result.insecticide, border: "#f59e0b" },
                   ].map(({ icon, label, value, border }) => value && (
@@ -812,7 +840,7 @@ export default function DiseaseScan() {
                     <button type="button" onClick={() => sendFeedback("correct")} disabled={correcting}
                       style={{
                         flex: 1, padding: "10px 0", borderRadius: 12, border: "1.5px solid #a7f3d0",
-                        background: "#ecfdf5", color: "#065f46", fontWeight: 700,
+                        background: "#f4f6f0", color: "#4d6042", fontWeight: 700,
                         fontSize: "0.82rem", cursor: "pointer", display: "flex",
                         alignItems: "center", justifyContent: "center", gap: 6,
                       }}>
@@ -884,12 +912,12 @@ export default function DiseaseScan() {
             {/* Header */}
             <div style={{
               padding: "10px 14px",
-              background: "linear-gradient(135deg, var(--g700) 0%, var(--g600) 100%)",
+              background: "#eef3e7",
               display: "flex", alignItems: "center", gap: 7,
             }}>
-              <Info size={13} color="rgba(255,255,255,0.9)" style={{ flexShrink: 0 }} />
-              <strong style={{ fontSize: "0.72rem", color: "#fff", fontWeight: 800 }}>
-                38 Disease Classes · 14 Crops Supported
+              <Info size={15} color="#708359" style={{ flexShrink: 0 }} />
+              <strong style={{ fontSize: "0.77rem", color: "#607446", fontWeight: 550 }}>
+                38 leaf classes across 14 crops
               </strong>
             </div>
             {/* Body */}
@@ -1005,7 +1033,7 @@ export default function DiseaseScan() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12 }}>
               {[
                 { label: "Total Scans",        value: analytics.total_scans,     icon: <Microscope size={16} />, color: "#6366f1" },
-                { label: "Avg Confidence",     value: `${analytics.avg_confidence}%`, icon: <TrendingUp size={16} />, color: "#10b981" },
+                { label: "Avg Confidence",     value: `${analytics.avg_confidence}%`, icon: <TrendingUp size={16} />, color: "#74885d" },
                 { label: "Uncertain Scans",    value: analytics.uncertain_count, icon: <AlertTriangle size={16} />, color: "#f59e0b" },
                 { label: "User Corrections",   value: analytics.correction_count, icon: <Database size={16} />, color: "#8b5cf6" },
               ].map(({ label, value, icon, color }) => (
@@ -1081,7 +1109,7 @@ export default function DiseaseScan() {
                   }}>
                     <div style={{
                       height: "100%", borderRadius: 4,
-                      background: analytics.fine_tune_ready ? "#10b981" : "#8b5cf6",
+                      background: analytics.fine_tune_ready ? "#74885d" : "#8b5cf6",
                       width: `${Math.min((analytics.correction_count / 50) * 100, 100)}%`,
                       transition: "width 0.8s ease",
                     }} />

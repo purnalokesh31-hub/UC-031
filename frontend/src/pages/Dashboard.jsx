@@ -1,37 +1,39 @@
 import { useCallback, useEffect, useRef, useState, lazy, Suspense } from "react";
-import { Activity, ArrowDown, Leaf, RefreshCw } from "lucide-react";
+import { ArrowRight, BarChart3, BookOpen, Info, Leaf, RefreshCw, SlidersHorizontal, Sprout } from "lucide-react";
 import { api, isCancel } from "../api";
 import InputForm from "../components/InputForm";
-import RecommendationsPanel from "../components/RecommendationsPanel";
+import { useWorkspace, newId } from "../lib/WorkspaceStore";
+import QuantumWalkthrough from "../components/QuantumWalkthrough";
 import MetricsBadge from "../components/MetricsBadge";
 
 const YieldComparison = lazy(() => import("../components/YieldComparison"));
+const RecommendationsPanel = lazy(() => import("../components/RecommendationsPanel"));
 
 export default function Dashboard({ active }) {
+  const { store, update } = useWorkspace();
   const [result, setResult] = useState(null);
   const [recommendations, setRecommendations] = useState(null);
-  const [allMetrics, setAllMetrics] = useState(null);
-  const [selectedCrop, setSelectedCrop] = useState("Rice");
+  const [allMetrics, setAllMetrics] = useState(store.metrics);
+  const [selectedCrop, setSelectedCrop] = useState(store.draft?.crop || "Rice");
   const [apiStatus, setApiStatus] = useState("checking");
   const [isLoading, setIsLoading] = useState(false);
-  const [comparison, setComparison] = useState(null);
-  const [comparisonLoading, setComparisonLoading] = useState(false);
   const [error, setError] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [contextOpen, setContextOpen] = useState(false);
+  const [editRequest, setEditRequest] = useState(0);
+  const [isStale, setIsStale] = useState(false);
   const predictionController = useRef(null);
-  const comparisonController = useRef(null);
-  const lastFormValues = useRef(null);
   const metricsController = useRef(null);
-  const metrics = result?.metrics || allMetrics?.[selectedCrop] || null;
+  const metrics = (!isStale && result?.metrics) || allMetrics?.[selectedCrop] || null;
 
   useEffect(() => {
     if (!result || !active) return;
     const output = document.getElementById("yield-result");
     output?.focus({ preventScroll: true });
-    if (window.matchMedia("(max-width: 1000px)").matches) {
+    if (window.matchMedia("(max-width: 900px)").matches) {
       output?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" });
     }
-  }, [result]);
+  }, [result, active]);
 
   const fetchMetrics = useCallback(async () => {
     metricsController.current?.abort();
@@ -47,6 +49,7 @@ export default function Dashboard({ active }) {
       setApiStatus("online");
       if (response.data.error) throw new Error(response.data.error);
       setAllMetrics(response.data);
+      update(() => ({ metrics: response.data }));
     } catch (requestError) {
       if (!isCancel(requestError)) setApiStatus("offline");
     } finally {
@@ -59,117 +62,75 @@ export default function Dashboard({ active }) {
     return () => {
       metricsController.current?.abort();
       predictionController.current?.abort();
-      comparisonController.current?.abort();
     };
   }, [fetchMetrics]);
 
-  const handlePredict = useCallback(async formValues => {
+  const handlePredict = useCallback(async (formValues, scenarioContext = {}) => {
     predictionController.current?.abort();
-    comparisonController.current?.abort();
-    lastFormValues.current = formValues;
-    setComparison(null);
-    setComparisonLoading(false);
     const controller = new AbortController();
     predictionController.current = controller;
     setIsLoading(true);
     setError(null);
     setSelectedCrop(formValues.crop_type);
-    setResult(null);
-    setRecommendations(null);
+    setIsStale(true);
     try {
-      const response = await api.post("/predict/selected", formValues, {
+      const response = await api.post("/predict/both", formValues, {
         timeout: 30000,
         signal: controller.signal,
       });
       if (!controller.signal.aborted) {
         setApiStatus("online");
-        setResult({ ...response.data, inputs: formValues, created_at: new Date().toISOString() });
+        const saved = { ...response.data, id: newId(), inputs: formValues, context: scenarioContext, created_at: new Date().toISOString() };
+        setResult(saved);
+        setIsStale(false);
+        update(current => ({ history: [saved, ...current.history] }));
         setRecommendations(response.data.recommendations);
       }
     } catch (requestError) {
       if (!isCancel(requestError)) {
+        if (!requestError.response) setApiStatus("offline");
         const detail = requestError.response?.data?.detail;
         setError(Array.isArray(detail) ? detail.map(item => item.msg).join("; ")
           : typeof detail === "string" ? detail
-          : "The prediction service could not be reached. Check the local API and try again.");
+          : "The prediction service could not be reached. Please try again in a moment.");
       }
     } finally {
       if (predictionController.current === controller) setIsLoading(false);
     }
   }, []);
 
-  const handleCompare = useCallback(async family => {
-    if (!lastFormValues.current) return;
-    comparisonController.current?.abort();
-    const controller = new AbortController();
-    comparisonController.current = controller;
-    setComparison(null);
-    setComparisonLoading(true);
-    setError(null);
-    try {
-      const response = await api.post(`/predict/${family}`, lastFormValues.current, {
-        timeout: 30000,
-        signal: controller.signal,
-      });
-      if (!controller.signal.aborted) {
-        if (response.data.release_id !== result?.release_id) {
-          setError("The models were updated. Estimate yield again to compare models from the same release.");
-        } else setComparison({ family, data: response.data });
-      }
-    } catch (requestError) {
-      if (!isCancel(requestError)) {
-        setError("The additional model comparison failed. Your selected estimate is still available.");
-      }
-    } finally {
-      if (comparisonController.current === controller) setComparisonLoading(false);
-    }
-  }, [result]);
-
   const handleCropChange = crop => {
     setError(null);
-    comparisonController.current?.abort();
-    lastFormValues.current = null;
-    setComparison(null);
-    setComparisonLoading(false);
     setSelectedCrop(crop);
-    setResult(null);
-    setRecommendations(null);
+    setIsStale(true);
   };
 
   const handleInputsChange = () => {
     setError(null);
     predictionController.current?.abort();
-    comparisonController.current?.abort();
-    lastFormValues.current = null;
-    setResult(null);
-    setRecommendations(null);
-    setComparison(null);
+    setIsStale(true);
     setIsLoading(false);
-    setComparisonLoading(false);
   };
 
   return (
-    <main className="page-content dashboard-page">
+    <main className="page-content dashboard-page direct-workspace">
       <section className="dashboard-hero">
         <div className="dashboard-hero-copy">
-          <div className="dashboard-eyebrow"><span /> THE YIELD WORKSPACE</div>
-          <h1>A clearer view of your <span>field.</span></h1>
-          <p>Choose your crop. Add field conditions. Explore the estimated harvest.</p>
+          <h1>Yield estimate</h1>
+          <p>Choose a crop, enter your conditions, and compare the estimates.</p>
         </div>
         <div className="dashboard-hero-aside">
           <div className={`api-status api-status-${apiStatus}`} role="status">
             <span className="api-status-dot" />
-            {apiStatus === "online" ? "Models ready" : apiStatus === "offline" ? "Service unavailable" : "Connecting…"}
+            {apiStatus === "online" ? "Ready to estimate" : apiStatus === "offline" ? "Service unavailable" : "Connecting…"}
           </div>
-          <button type="button" className="refresh-button" disabled={refreshing} onClick={() => fetchMetrics()}>
-            <RefreshCw size={15} className={refreshing ? "spin" : ""} /> {refreshing ? "Refreshing…" : "Refresh models"}
-          </button>
+          {apiStatus === "offline" && <button type="button" className="refresh-button" disabled={refreshing} onClick={() => fetchMetrics()}>
+            <RefreshCw size={14} className={refreshing ? "spin" : ""} /> {refreshing ? "Reconnecting…" : "Reconnect"}
+          </button>}
         </div>
       </section>
 
-      <div className="workspace-notice"><Leaf size={17} /><p><strong>A space to explore.</strong> This demo learns from synthetic data. Estimates are for research and have not been validated on real harvests.</p></div>
-
-      {error && <div className="dashboard-error" role="alert"><Activity size={17} /> {error}</div>}
+      <div className="workspace-notice"><BookOpen size={17} /><p><strong>Research demo</strong> Estimates use synthetic training data and are not validated on real harvests.</p><a href="#about">About the data <ArrowRight size={14} /></a></div>
 
       <div className="dashboard-grid">
         <section className="dashboard-input-column" aria-label="Field conditions">
@@ -179,32 +140,37 @@ export default function Dashboard({ active }) {
             allMetrics={allMetrics}
             onCropChange={handleCropChange}
             onValuesChange={handleInputsChange}
+            editRequest={editRequest}
+            submitError={error}
           />
         </section>
 
         <section id="yield-result" tabIndex={-1} className="dashboard-output-column" aria-label="Yield estimate and context">
+          {result && isStale && !isLoading && <p className="previous-result-note" role="status"><Info size={18} /><span><strong>Previous estimate</strong> These results use your previously submitted conditions. Estimate again to apply your current values.</span></p>}
           {result || isLoading ? (
             <Suspense fallback={<div className="output-placeholder" role="status">Loading model comparison…</div>}>
-              <YieldComparison result={result} isLoading={isLoading} comparison={comparison}
-                comparisonLoading={comparisonLoading} onCompare={handleCompare}
-                onEdit={() => { document.getElementById("crop-select")?.focus({ preventScroll: true }); document.getElementById("field-form")?.scrollIntoView({ behavior: "smooth", block: "start" }); }} />
+              <YieldComparison result={result} isLoading={isLoading}
+                onEdit={() => setEditRequest(value => value + 1)} />
             </Suspense>
           ) : (
             <div className="output-placeholder output-empty">
-              <p className="placeholder-eyebrow">02 / YOUR ESTIMATE</p>
-              <div className="field-illustration" aria-hidden="true"><Leaf size={44} strokeWidth={1.3} /><i /><i /><i /></div>
-              <h2>Every harvest starts here.</h2>
-              <p>Set up your field on the left, or use the example values to try it. Your estimated yield and uncertainty range will appear here.</p>
-              <div className="empty-steps"><span>1. Choose a crop</span><span>2. Check conditions</span><span>3. Estimate yield</span></div>
-              <a className="mobile-form-link" href="#field-form" onClick={event => { event.preventDefault(); document.getElementById("crop-select")?.focus(); }}><ArrowDown size={16} /> Set up your field</a>
+              <div className="result-empty-icon"><BarChart3 size={25} strokeWidth={1.7} /></div>
+              <h2>Your estimate, at a glance</h2>
+              <p>Select <strong>Estimate yield</strong> to see your results. Trying it for the first time? Start with the sample values.</p>
+              <div className="estimate-preview-list">
+                <div><Sprout size={18} /><span>Yield & field total</span><small>Tonnes or quintals</small></div>
+                <div><SlidersHorizontal size={18} /><span>Prediction range</span><small>90% interval</small></div>
+                <div><BarChart3 size={18} /><span>Side-by-side comparison</span><small>Both models</small></div>
+              </div>
             </div>
           )}
-          {recommendations && <details className="context-details"><summary>Demo baseline & yield context</summary><RecommendationsPanel data={recommendations} isLoading={false} /></details>}
+          {result && <><p className="feature-help">Analysis saved on this device. <a href="#history">Open history, compare scenarios or record harvest</a></p><QuantumWalkthrough result={result} /></>}
+          {recommendations && !isStale && <details className="context-details" open={contextOpen} onToggle={event => setContextOpen(event.currentTarget.open)}><summary>Demo baseline & yield context</summary>{contextOpen && <Suspense fallback={<p role="status">Loading yield context…</p>}><RecommendationsPanel data={recommendations} isLoading={false} /></Suspense>}</details>}
         </section>
       </div>
 
       <MetricsBadge metrics={metrics} apiStatus={apiStatus} />
-      <p className="dashboard-disclaimer">For research and demonstration only. This model has not been validated against measured harvests. Do not use this estimate alone to make financial, planting, fertilizer, or treatment decisions.</p>
+      <p className="dashboard-disclaimer"><Leaf size={14} /> Explore scenarios here; use local expertise and measured field data for agricultural decisions.</p>
     </main>
   );
 }

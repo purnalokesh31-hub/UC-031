@@ -1,37 +1,184 @@
 .disease-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   align-items: start;
-  gap: 20px;
+  gap: 28px;
 }
 .disease-upload-column, .disease-history-column { min-width: 0; }
-.disease-upload-column { max-width: 620px; width: 100%; }
+.disease-upload-column { max-width: 650px; width: 100%; }
+
 .disease-layout button:focus-visible,
 .disease-layout [role="button"]:focus-visible,
 .disease-layout input:focus-visible {
-  outline: 3px solid rgba(22, 101, 52, .36);
+  outline: 3px solid var(--green-500);
   outline-offset: 3px;
 }
 .disease-layout [role="button"] { touch-action: manipulation; }
 .disease-layout button:disabled { cursor: wait !important; opacity: .7; }
+
 .disease-history-column > .card,
-.disease-upload-column > .card { border-color: #e0e9e0; border-radius: 16px; box-shadow: 0 2px 9px rgba(25,45,31,.045); }
+.disease-upload-column > .card {
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.1), 0 2px 6px rgba(0, 0, 0, 0.04);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  transition: all 0.25s var(--ease-spring);
+}
 .disease-history-column > .card:hover,
-.disease-upload-column > .card:hover { transform: none; box-shadow: 0 3px 12px rgba(25,45,31,.07); }
-.disease-layout .hero-banner { border-radius: 17px; box-shadow: 0 8px 22px rgba(28,75,49,.12); }
-.disease-layout .btn-secondary { min-height: 44px; }
-.disease-layout .card-body button[aria-label="Refresh scan history"] { min-width: 40px; min-height: 40px; border-radius: 9px !important; }
+.disease-upload-column > .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px -6px rgba(16, 185, 129, 0.16);
+  border-color: var(--border-md);
+}
+
+.disease-layout .hero-banner {
+  border-radius: var(--r-xl);
+  box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.18);
+  background: linear-gradient(135deg, var(--green-700) 0%, var(--green-900) 100%);
+  color: #ffffff;
+  padding: 26px 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.disease-layout .btn-secondary {
+  min-height: 44px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--border);
+  background: #ffffff;
+  color: var(--text-700);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-xs);
+}
+.disease-layout .btn-secondary:hover {
+  background: var(--green-50);
+  border-color: var(--green-400);
+  color: var(--green-800);
+  transform: translateY(-1px);
+}
+
+.disease-layout .card-body button[aria-label="Refresh scan history"] {
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: var(--r-md) !important;
+}
+
+/* Image Split Slider & Inspection Lens */
+.image-split-view {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  user-select: none;
+  background: #0b1a13;
+}
+
+.split-image-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.split-image-overlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.split-divider-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #ffffff;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.9);
+  cursor: ew-resize;
+  z-index: 10;
+}
+
+.split-divider-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--green-500);
+  border: 3px solid #ffffff;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  font-size: 0.85rem;
+}
+
+.split-labels-bar {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.split-label-pill {
+  padding: 4px 10px;
+  border-radius: var(--r-full);
+  background: rgba(12, 26, 20, 0.75);
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+}
+
+/* Sensitivity Filter Slider */
+.filter-slider-box {
+  padding: 14px 16px;
+  border-radius: var(--r-md);
+  background: rgba(240, 248, 243, 0.7);
+  border: 1px solid var(--border);
+  margin-top: 12px;
+}
+
+.filter-slider-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 650;
+  color: var(--text-700);
+  margin-bottom: 6px;
+}
 
 @media (max-width: 920px) {
-  .disease-layout { grid-template-columns: minmax(0,1fr); }
+  .disease-layout { grid-template-columns: minmax(0, 1fr); }
   .disease-upload-column { max-width: none; }
 }
 @media (max-width: 600px) {
-  .disease-layout { gap: 15px; min-height: 0 !important; }
-  .disease-layout .hero-banner { padding: 19px 17px; }
+  .disease-layout { gap: 18px; min-height: 0 !important; }
+  .disease-layout .hero-banner { padding: 20px 18px; }
   .disease-layout > * { min-width: 0; }
-  .disease-layout .card-header { padding: 13px 14px; }
-  .disease-layout .card-body { padding-right: 14px; padding-left: 14px; }
-  .disease-layout .btn-secondary { font-size: .76rem; padding-right: 9px; padding-left: 9px; }
+  .disease-layout .card-header { padding: 14px 16px; }
+  .disease-layout .card-body { padding-right: 16px; padding-left: 16px; }
+  .disease-layout .btn-secondary { font-size: 0.8rem; padding-right: 12px; padding-left: 12px; }
   .disease-layout .history-item { min-height: 56px; }
 }
