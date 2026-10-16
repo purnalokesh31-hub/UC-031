@@ -1,0 +1,59 @@
+{
+  "protocol_version": "1.1",
+  "status": "split_frozen_before_benchmark_scoring",
+  "frozen_utc": "2026-09-24T13:06:19.935925+00:00",
+  "panel_path_at_freeze": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\processed\\rice_pilot_1981_2012\\panel.csv",
+  "panel_sha256": "0d9249b8a6b2e36957332c121d0ff8229787326b63fd93655bd83e2960185a8c",
+  "evaluation_code_sha256": {
+    "benchmark.py": "34bdf0e83d91301953f47fbbdec582fc89fd48fa0c5d769e9dc23b7e23b4d77b",
+    "validated_yield.py": "98bbd5edaebb6abab079def69945e76908f0be2cf5787113e99f7149684718bd"
+  },
+  "row_key_definition": "crop|season|year|district_id",
+  "district_selection": "20% of canonical district IDs sorted by SHA-256 ID hash; outcome-blind",
+  "temporal_selection": "latest 3 complete years per crop among development districts",
+  "crops": {
+    "Rice": {
+      "held_out_district_ids": [
+        "DLD1966-62",
+        "DLD1966-53",
+        "DLD1966-63",
+        "DLD1966-48"
+      ],
+      "development_district_count": 13,
+      "test_years": [
+        2010,
+        2011,
+        2012
+      ],
+      "calibration_year": 2009,
+      "roles": {
+        "fit": {
+          "n_rows": 364,
+          "n_districts": 13,
+          "row_keys_sha256": "0ac969f2e701feb9ab7b796bbeca98afb3e84ca47e7e017ae2e4510d65da4533"
+        },
+        "calibration": {
+          "n_rows": 13,
+          "n_districts": 13,
+          "row_keys_sha256": "27abe112131739ec2c4f817e7f10f9ae0829ad933ee028915a92d952054c6cd9"
+        },
+        "reserved_unseen_districts": {
+          "n_rows": 116,
+          "n_districts": 4,
+          "row_keys_sha256": "824ff2e22f12a7cc0fd262a4eef15abaf23805bb0f7d7f1ae659ab29dd46d214"
+        },
+        "future_years_known_districts": {
+          "n_rows": 39,
+          "n_districts": 13,
+          "row_keys_sha256": "b293c349f3954601bd3bdf4f965a0851bdfb63163deed01f363c5d0cb21f7414"
+        },
+        "joint_unseen_district_and_future_years": {
+          "n_rows": 12,
+          "n_districts": 4,
+          "row_keys_sha256": "9df2ac99ad05d1d89e14517481f6e1c8f6ab3ec2929200be450fa1dd6850ca49"
+        }
+      }
+    }
+  },
+  "warning": "Same-source spatial/temporal holdouts; not an independent-source validation dataset."
+}

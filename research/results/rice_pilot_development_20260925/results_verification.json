@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "checks": "Saved metrics independently recomputed; prediction keys and targets match fit role; panel/protocol/code hashes match; no reserved evaluation receipt",
+  "counts": {
+    "rice_pilot_development_20260925": {
+      "score_rows": 60,
+      "prediction_rows": 5040
+    },
+    "rice_feature_sensitivity_20260925": {
+      "score_rows": 45,
+      "prediction_rows": 3780
+    }
+  }
+}

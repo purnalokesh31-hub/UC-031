@@ -1,0 +1,167 @@
+{
+  "provider": "nasa",
+  "points_sha256": "e7099a5900c0d7400ade7030e2dd1bdd5e0897a3835c651f145e86ace019f83c",
+  "responses": [
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=18.6&longitude=84.3&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "44",
+      "retrieved_utc": "2026-09-24T12:59:14.377440+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\44_7cf72fd4a8dd2c69c6e5a17d2065e57910bcf9c59a8b2ad1eeb00e466dc3c380.json",
+      "sha256": "9cb49044a438cb3bbe2c601280fd9d14efe3c46ee4b3dc25a84daec3e9be1c1e"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=17.7&longitude=83.3&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "45",
+      "retrieved_utc": "2026-09-24T12:59:14.537540+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\45_e070f270651cb63e482fdad0530cb8e9283b2005f295bb90b39b22cfdf0bc66b.json",
+      "sha256": "4206ebdbda6b4cfc33b47ee67011498a3e6ed6a1ed485e70843ea17163625ccb"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=17.0&longitude=82.2&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "46",
+      "retrieved_utc": "2026-09-24T12:59:17.068758+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\46_59eae7fcaa5d85279521eeb6a3ed3729eb38d7f92fc9c50132a9a1e46d5a9f1f.json",
+      "sha256": "86266514db4a1de953d6ea2c0667b8923ec860daffcbc8fe2403c820b77ed4ea"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=16.8&longitude=81.5&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "47",
+      "retrieved_utc": "2026-09-24T12:59:17.280319+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\47_9c4187314e5f53ef5de22f2c0b6c67f94075be33846da820c347897859285bf3.json",
+      "sha256": "bb0bf828cedf0a8f6d69df30337a28cdc438eb25757dccd1643590d7d7f226bd"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=16.2&longitude=81.1&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "48",
+      "retrieved_utc": "2026-09-24T12:59:18.942704+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\48_a49de483c897caf1d154ae0fe0aa69b307ac5dcff1fa6b3e7082193a86aea7d2.json",
+      "sha256": "740bb1e294e0223a22bbcd2f4e7c3b235fab23ff7f223c5ddc91c5994828f1e5"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=16.6&longitude=79.6&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "49",
+      "retrieved_utc": "2026-09-24T12:59:18.408609+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\49_2b46c57ee3132ec9d756eda7028051b4d96c58696b82a1064a40bc2f4487c340.json",
+      "sha256": "d36c1b838a1c40d857262c2afd42fee74e947f46a60254205ef9ae6db7d8dde9"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=14.5&longitude=80.0&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "50",
+      "retrieved_utc": "2026-09-24T12:59:21.117039+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\50_5753101a4313c372e3dd0bf5d4b04b2d62a37e9f0209a40800154b202068745e.json",
+      "sha256": "8cd8c08d3cee9c73db483159b4e80aed38faf4c3df0e5d189c538547fdc49a16"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=15.8&longitude=78.1&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "51",
+      "retrieved_utc": "2026-09-24T12:59:21.389104+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\51_d6ea525343ca43dc15f0810cd553136f2b242869abfed1b17d9aa7cfee5fab67.json",
+      "sha256": "62a53af88586d9dec6a2729842a43ee319ef023cf58a3b1c85a6e55ec93227f7"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=14.6&longitude=77.0&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "52",
+      "retrieved_utc": "2026-09-24T12:59:23.296628+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\52_85aa61473849d7b291998763dce135f01257a46007b802ddcca33ed7211711af.json",
+      "sha256": "aa4f0540d2dd5b43807e6eb43e9aa7ed8b9ce475b43c70b8ffbad2229546b767"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=14.5&longitude=78.8&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "53",
+      "retrieved_utc": "2026-09-24T12:59:24.037576+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\53_7476b04fa2761e91cfee59c46e777b14d9639a994c66b0ec0b540f90613cc581.json",
+      "sha256": "42817b252ea5057709ad091b3127b026953ad8bac472d2649b5a88198942eeca"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=13.5&longitude=78.5&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "54",
+      "retrieved_utc": "2026-09-24T12:59:26.026980+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\54_04501ac774c9f3535335a7f52264f3afbbf9cb6ab49b6a3ad0dadc5eff6e0eef.json",
+      "sha256": "173728eeff9286c28b1dadeddae45cee89fd16545ed0996c738382d436b4d1f4"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=17.5&longitude=78.5&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "55",
+      "retrieved_utc": "2026-09-24T12:59:26.158067+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\55_cbd0d07691045ee1d30ae8bea32b49e17cd4944aafc2bbef17bcc48a02e91035.json",
+      "sha256": "f56987bebbfdd1a510083e1a789298b24e99c8b12194549926379be24bb565a9"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=18.1&longitude=78.1&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "56",
+      "retrieved_utc": "2026-09-24T12:59:28.385778+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\56_16ccbd509ea7c328a92421d685e09a417c56a39d90286258df6b033b0e279cba.json",
+      "sha256": "aa2a5ab82a693dd4517fe5053a26febdfe0b175e8a72f62810af0cbfbe721f6a"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=17.6&longitude=78.0&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "57",
+      "retrieved_utc": "2026-09-24T12:59:28.699993+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\57_f517b5f2454bb5c636cbc96e7abc2835a36ecd289efb3e213b409c51374a3adf.json",
+      "sha256": "dddf0162edd280fc29eeb83cc80fd4685a99922fcd64060fc7b87acf11d04c49"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=16.7&longitude=78.0&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "58",
+      "retrieved_utc": "2026-09-24T12:59:30.922147+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\58_a15a828211840cb01b6d5307a8bd9c81074f82eedc8ac18827156af9dd93b9d3.json",
+      "sha256": "a5203506a6653e96894032f27a56fe6c6c05ae0c00632a028e3b490628826db9"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=17.1&longitude=79.3&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "59",
+      "retrieved_utc": "2026-09-24T12:59:30.148863+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\59_bf2b373d7fff86d5e95179c2384e6171404b1f3972bbbe3943af7f3d5ce2185d.json",
+      "sha256": "d29a1a5cfd78f627a6489dea801ff6a55379bbba57224ac0452529703dcfd070"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=18.0&longitude=79.6&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "60",
+      "retrieved_utc": "2026-09-24T12:59:33.107754+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\60_6ea6f1829e1611914ee00ece718a72f31b3834d3745e27813adfdd732de8fdaa.json",
+      "sha256": "58ab34ecf612e137369e7cae03c03e4a6fefae2f96aafeb06ba1b93d2630c567"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=17.7&longitude=80.9&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "61",
+      "retrieved_utc": "2026-09-24T12:59:33.294714+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\61_419e551f13587466ddedd5baf9af5dc20ecef8f3f05a4bf8499c9aa757a976de.json",
+      "sha256": "6621273e686eb65f8c89bf95e598f272255e83e535d2fbcf68cad87760096317"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=18.4&longitude=79.0&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "62",
+      "retrieved_utc": "2026-09-24T12:59:35.211374+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\62_2c6504564b0fa5fa800a41c6f94ff0ffbd41316b8076d987e844f87efb632516.json",
+      "sha256": "2d34e975a794475fa82201dd5ff2d5445340cdac1fc34941b460d8e888a4376d"
+    },
+    {
+      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CPRECTOTCORR%2CRH2M&community=AG&latitude=19.4&longitude=79.3&start=19810601&end=20130531&format=JSON&time-standard=UTC",
+      "provider": "nasa",
+      "district_id": "63",
+      "retrieved_utc": "2026-09-24T12:59:35.712889+00:00",
+      "path": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\data\\raw\\pilot_covariates\\nasa\\63_1f8e2e587dc741385fa345884d900752b2f488116653ead94069558fd823d686.json",
+      "sha256": "f244a0a106fca9849a17385361abd2322f56585bea91998f0b5ae01df0a1024e"
+    }
+  ],
+  "errors": []
+}

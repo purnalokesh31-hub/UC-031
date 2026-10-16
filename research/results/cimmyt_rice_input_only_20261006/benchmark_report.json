@@ -1,0 +1,707 @@
+{
+  "source": {
+    "citation": "Coggins et al. (2024), Farmer field survey dataset underpinning Data-driven strategies to improve nitrogen use efficiency of rice farming in South Asia, CIMMYT Dataverse, version 3.1; CC0 1.0.",
+    "doi_or_persistent_id": "https://hdl.handle.net/11529/10549105",
+    "file": "NUE_survey_dataset_v2.csv",
+    "raw_rows": 45643,
+    "raw_columns": 136,
+    "md5": "c7223de8068f16284f3768408f1730a0",
+    "target_note": "Yield is farmer-reported for most fields; the paper documents crop-cut measurement for about 40% of Bangladesh floodplain yield records and about 25% of Punjab/Haryana records. The harmonized file has no row-level measurement-method flag, so this benchmark cannot isolate crop-cut-only targets."
+  },
+  "filter_counts": {
+    "raw_n": 45643,
+    "stages": {
+      "monsoon_kharif": {
+        "removed": 10146,
+        "remaining": 35497
+      },
+      "transplanted": {
+        "removed": 1352,
+        "remaining": 34145
+      },
+      "yield_0_5_to_10_t_ha": {
+        "removed": 733,
+        "remaining": 33412
+      },
+      "nitrogen_0_to_400_kg_ha": {
+        "removed": 1460,
+        "remaining": 31952
+      },
+      "nursery_duration_0_to_100_days": {
+        "removed": 251,
+        "remaining": 31701
+      },
+      "field_duration_60_to_300_days": {
+        "removed": 194,
+        "remaining": 31507
+      },
+      "crop_duration_90_to_340_days": {
+        "removed": 13,
+        "remaining": 31494
+      },
+      "P2O5_ha_finite_0_to_500": {
+        "removed": 8,
+        "remaining": 31486
+      },
+      "K2O_ha_finite_0_to_500": {
+        "removed": 10,
+        "remaining": 31476
+      },
+      "soil_ph_3_to_10": {
+        "removed": 295,
+        "remaining": 31181
+      }
+    },
+    "final_n": 31181
+  },
+  "feature_mapping": {
+    "N_kg_ha": "Applied nitrogen rate; definition matches fertilizer-input nitrogen in kg/ha.",
+    "P2O5_ha": "Applied mineral phosphorus expressed as P2O5 kg/ha; app's generic P unit is ambiguous.",
+    "K2O_ha": "Applied mineral potassium expressed as K2O kg/ha; app's generic K unit is ambiguous.",
+    "SoilGrids_phh2o": "SoilGrids topsoil pH(H2O), 0-5 cm; not a field/lab measurement of the actual plot.",
+    "total_precip": "CHIRPS precipitation total for the calendar year of the crop; not interchangeable with the app's unqualified 0-500 mm rainfall input.",
+    "not_present": [
+      "soil moisture",
+      "temperature",
+      "relative humidity"
+    ]
+  },
+  "protocol": {
+    "target": "yield_kg_ha, translated to q/ha for metrics",
+    "validation": "Leave one underlying survey Dataset out, in turn. The identifier and all location/year/crop outcome features are excluded from predictors.",
+    "model_selection": "Untuned, fixed-configuration exploratory comparison; no model selected for deployment. Candidate recipes share the same grouped outer holdouts.",
+    "target_quality": "Published paper's available crop/season/target/input/duration exclusion filters were applied. Coordinate-within-region polygon exclusion was not recreated because the public package lacks the polygons/code.",
+    "uncertainty": "p90 absolute grouped-holdout error is a descriptive error scale, not a calibrated prediction interval.",
+    "random_seed": 1407,
+    "software": {
+      "python": "3.12.13",
+      "pandas": "2.2.2",
+      "numpy": "1.26.4",
+      "scikit_learn": "1.5.0"
+    }
+  },
+  "model_metrics": [
+    {
+      "variant": "four_input_fields",
+      "model": "random_forest",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "survey_datasets": 11,
+      "complete_case_n": 31181,
+      "n": 31181,
+      "mae_q_ha": 10.337033515899059,
+      "rmse_q_ha": 13.234568941443992,
+      "r2": 0.2965518973228275,
+      "mae_kg_ha": 1033.7033515899059,
+      "rmse_kg_ha": 1323.4568941443993,
+      "p90_abs_error_q_ha": 21.325396580699444
+    },
+    {
+      "variant": "four_input_fields",
+      "model": "hist_gradient_boosting",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "survey_datasets": 11,
+      "complete_case_n": 31181,
+      "n": 31181,
+      "mae_q_ha": 10.389252680536574,
+      "rmse_q_ha": 13.21770164440559,
+      "r2": 0.2983438267889902,
+      "mae_kg_ha": 1038.9252680536574,
+      "rmse_kg_ha": 1321.770164440559,
+      "p90_abs_error_q_ha": 21.449272818279372
+    },
+    {
+      "variant": "four_input_fields",
+      "model": "extra_trees",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "survey_datasets": 11,
+      "complete_case_n": 31181,
+      "n": 31181,
+      "mae_q_ha": 10.737172952662327,
+      "rmse_q_ha": 13.53400679326235,
+      "r2": 0.26436015933289103,
+      "mae_kg_ha": 1073.7172952662327,
+      "rmse_kg_ha": 1353.400679326235,
+      "p90_abs_error_q_ha": 21.824851597217233
+    },
+    {
+      "variant": "four_input_fields",
+      "model": "fixed_mean_ensemble",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "survey_datasets": 11,
+      "complete_case_n": 31181,
+      "n": 31181,
+      "mae_q_ha": 10.993865044312507,
+      "rmse_q_ha": 13.75389941058135,
+      "r2": 0.24026147551846977,
+      "mae_kg_ha": 1099.3865044312506,
+      "rmse_kg_ha": 1375.389941058135,
+      "p90_abs_error_q_ha": 22.08234373689192
+    },
+    {
+      "variant": "four_input_fields",
+      "model": "training_median",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "survey_datasets": 11,
+      "complete_case_n": 31181,
+      "n": 31181,
+      "mae_q_ha": 13.272641139556123,
+      "rmse_q_ha": 16.71486241251496,
+      "r2": -0.12206514899998488,
+      "mae_kg_ha": 1327.2641139556124,
+      "rmse_kg_ha": 1671.4862412514963,
+      "p90_abs_error_q_ha": 27.7108
+    },
+    {
+      "variant": "four_input_fields",
+      "model": "ridge",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "survey_datasets": 11,
+      "complete_case_n": 31181,
+      "n": 31181,
+      "mae_q_ha": 13.904439902496003,
+      "rmse_q_ha": 17.08175388181593,
+      "r2": -0.1718644556749156,
+      "mae_kg_ha": 1390.4439902496003,
+      "rmse_kg_ha": 1708.175388181593,
+      "p90_abs_error_q_ha": 27.984379479123792
+    },
+    {
+      "variant": "four_inputs_plus_annual_precip",
+      "model": "hist_gradient_boosting",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o",
+        "total_precip"
+      ],
+      "survey_datasets": 11,
+      "complete_case_n": 27883,
+      "n": 27883,
+      "mae_q_ha": 10.474768568473843,
+      "rmse_q_ha": 13.288289781946512,
+      "r2": 0.30335453260688294,
+      "mae_kg_ha": 1047.4768568473844,
+      "rmse_kg_ha": 1328.8289781946512,
+      "p90_abs_error_q_ha": 21.377624160761602
+    },
+    {
+      "variant": "four_inputs_plus_annual_precip",
+      "model": "random_forest",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o",
+        "total_precip"
+      ],
+      "survey_datasets": 11,
+      "complete_case_n": 27883,
+      "n": 27883,
+      "mae_q_ha": 10.767775267180712,
+      "rmse_q_ha": 13.519255090728144,
+      "r2": 0.27892712214562543,
+      "mae_kg_ha": 1076.7775267180712,
+      "rmse_kg_ha": 1351.9255090728145,
+      "p90_abs_error_q_ha": 21.588834921000725
+    },
+    {
+      "variant": "four_inputs_plus_annual_precip",
+      "model": "extra_trees",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o",
+        "total_precip"
+      ],
+      "survey_datasets": 11,
+      "complete_case_n": 27883,
+      "n": 27883,
+      "mae_q_ha": 10.964955045455422,
+      "rmse_q_ha": 13.753877572230081,
+      "r2": 0.25368195305437735,
+      "mae_kg_ha": 1096.4955045455422,
+      "rmse_kg_ha": 1375.387757223008,
+      "p90_abs_error_q_ha": 21.901408305605525
+    },
+    {
+      "variant": "four_inputs_plus_annual_precip",
+      "model": "fixed_mean_ensemble",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o",
+        "total_precip"
+      ],
+      "survey_datasets": 11,
+      "complete_case_n": 27883,
+      "n": 27883,
+      "mae_q_ha": 11.276328811009298,
+      "rmse_q_ha": 13.969122749250127,
+      "r2": 0.23013973954251854,
+      "mae_kg_ha": 1127.6328811009298,
+      "rmse_kg_ha": 1396.9122749250128,
+      "p90_abs_error_q_ha": 22.17358245370108
+    },
+    {
+      "variant": "four_inputs_plus_annual_precip",
+      "model": "training_median",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o",
+        "total_precip"
+      ],
+      "survey_datasets": 11,
+      "complete_case_n": 27883,
+      "n": 27883,
+      "mae_q_ha": 13.49830098909157,
+      "rmse_q_ha": 16.87402206038723,
+      "r2": -0.12333906014995177,
+      "mae_kg_ha": 1349.830098909157,
+      "rmse_kg_ha": 1687.402206038723,
+      "p90_abs_error_q_ha": 27.818999999999996
+    },
+    {
+      "variant": "four_inputs_plus_annual_precip",
+      "model": "ridge",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o",
+        "total_precip"
+      ],
+      "survey_datasets": 11,
+      "complete_case_n": 27883,
+      "n": 27883,
+      "mae_q_ha": 14.248472754685867,
+      "rmse_q_ha": 17.42734383258479,
+      "r2": -0.19821853820391633,
+      "mae_kg_ha": 1424.8472754685868,
+      "rmse_kg_ha": 1742.734383258479,
+      "p90_abs_error_q_ha": 28.460387080143978
+    }
+  ],
+  "region_holdout_metrics": [
+    {
+      "variant": "four_input_fields",
+      "model": "each_fixed_recipe",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "held_out_regions": 6.0,
+      "complete_case_n": 31181,
+      "n": 155905,
+      "mae_q_ha": 13.98889814961267,
+      "rmse_q_ha": 17.300222107028816,
+      "r2": -0.2020314175651381,
+      "mae_kg_ha": 1398.889814961267,
+      "rmse_kg_ha": 1730.0222107028817,
+      "p90_abs_error_q_ha": 28.420097687245413,
+      "held_out_region": NaN
+    },
+    {
+      "variant": "four_input_fields",
+      "model": "fixed_mean_ensemble",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "held_out_regions": 6.0,
+      "complete_case_n": 31181,
+      "n": 31181,
+      "mae_q_ha": 13.857774633533289,
+      "rmse_q_ha": 17.073634627618823,
+      "r2": -0.17075070538637216,
+      "mae_kg_ha": 1385.7774633533288,
+      "rmse_kg_ha": 1707.3634627618824,
+      "p90_abs_error_q_ha": 28.03482404796181,
+      "held_out_region": NaN
+    },
+    {
+      "variant": "four_input_fields",
+      "model": "fixed_mean_ensemble_by_region",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "held_out_regions": NaN,
+      "complete_case_n": 1463,
+      "n": 1463,
+      "mae_q_ha": 14.730928379163911,
+      "rmse_q_ha": 18.90086391615418,
+      "r2": -0.4413830420983462,
+      "mae_kg_ha": 1473.092837916391,
+      "rmse_kg_ha": 1890.0863916154178,
+      "p90_abs_error_q_ha": 32.74372851885758,
+      "held_out_region": "AP"
+    },
+    {
+      "variant": "four_input_fields",
+      "model": "fixed_mean_ensemble_by_region",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "held_out_regions": NaN,
+      "complete_case_n": 8407,
+      "n": 8407,
+      "mae_q_ha": 10.001850588970505,
+      "rmse_q_ha": 12.789086155178895,
+      "r2": -0.1982360832132335,
+      "mae_kg_ha": 1000.1850588970506,
+      "rmse_kg_ha": 1278.9086155178895,
+      "p90_abs_error_q_ha": 19.89675654089595,
+      "held_out_region": "Bangladesh"
+    },
+    {
+      "variant": "four_input_fields",
+      "model": "fixed_mean_ensemble_by_region",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "held_out_regions": NaN,
+      "complete_case_n": 9547,
+      "n": 9547,
+      "mae_q_ha": 13.523416142371394,
+      "rmse_q_ha": 16.293257813432472,
+      "r2": -1.127570796352086,
+      "mae_kg_ha": 1352.3416142371393,
+      "rmse_kg_ha": 1629.3257813432472,
+      "p90_abs_error_q_ha": 26.557749835704723,
+      "held_out_region": "Bihar"
+    },
+    {
+      "variant": "four_input_fields",
+      "model": "fixed_mean_ensemble_by_region",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "held_out_regions": NaN,
+      "complete_case_n": 4843,
+      "n": 4843,
+      "mae_q_ha": 10.93234486173594,
+      "rmse_q_ha": 14.097844988151884,
+      "r2": -0.05145492169561594,
+      "mae_kg_ha": 1093.234486173594,
+      "rmse_kg_ha": 1409.7844988151885,
+      "p90_abs_error_q_ha": 22.678637887109748,
+      "held_out_region": "Nepal"
+    },
+    {
+      "variant": "four_input_fields",
+      "model": "fixed_mean_ensemble_by_region",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "held_out_regions": NaN,
+      "complete_case_n": 1199,
+      "n": 1199,
+      "mae_q_ha": 11.038407807433625,
+      "rmse_q_ha": 14.285278390836986,
+      "r2": 0.006608972090921705,
+      "mae_kg_ha": 1103.8407807433625,
+      "rmse_kg_ha": 1428.5278390836986,
+      "p90_abs_error_q_ha": 24.618278916743666,
+      "held_out_region": "Odisha"
+    },
+    {
+      "variant": "four_input_fields",
+      "model": "fixed_mean_ensemble_by_region",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "held_out_regions": NaN,
+      "complete_case_n": 5722,
+      "n": 5722,
+      "mae_q_ha": 22.924486838568665,
+      "rmse_q_ha": 24.5553791018909,
+      "r2": -4.2579966685424955,
+      "mae_kg_ha": 2292.4486838568664,
+      "rmse_kg_ha": 2455.53791018909,
+      "p90_abs_error_q_ha": 32.64098632455509,
+      "held_out_region": "Punjab_Haryana"
+    },
+    {
+      "variant": "four_inputs_plus_annual_precip",
+      "model": "each_fixed_recipe",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o",
+        "total_precip"
+      ],
+      "held_out_regions": 6.0,
+      "complete_case_n": 27883,
+      "n": 139415,
+      "mae_q_ha": 14.804225907796505,
+      "rmse_q_ha": 18.035179987533276,
+      "r2": -0.28325982138143924,
+      "mae_kg_ha": 1480.4225907796506,
+      "rmse_kg_ha": 1803.5179987533277,
+      "p90_abs_error_q_ha": 29.283005404054972,
+      "held_out_region": NaN
+    },
+    {
+      "variant": "four_inputs_plus_annual_precip",
+      "model": "fixed_mean_ensemble",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o",
+        "total_precip"
+      ],
+      "held_out_regions": 6.0,
+      "complete_case_n": 27883,
+      "n": 27883,
+      "mae_q_ha": 14.823330393321879,
+      "rmse_q_ha": 17.916356295338968,
+      "r2": -0.2664061651387617,
+      "mae_kg_ha": 1482.3330393321878,
+      "rmse_kg_ha": 1791.635629533897,
+      "p90_abs_error_q_ha": 28.82742109623644,
+      "held_out_region": NaN
+    },
+    {
+      "variant": "four_inputs_plus_annual_precip",
+      "model": "fixed_mean_ensemble_by_region",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o",
+        "total_precip"
+      ],
+      "held_out_regions": NaN,
+      "complete_case_n": 1463,
+      "n": 1463,
+      "mae_q_ha": 14.35129011748142,
+      "rmse_q_ha": 18.047369238380035,
+      "r2": -0.3141468712728839,
+      "mae_kg_ha": 1435.1290117481421,
+      "rmse_kg_ha": 1804.7369238380036,
+      "p90_abs_error_q_ha": 32.32986912012418,
+      "held_out_region": "AP"
+    },
+    {
+      "variant": "four_inputs_plus_annual_precip",
+      "model": "fixed_mean_ensemble_by_region",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o",
+        "total_precip"
+      ],
+      "held_out_regions": NaN,
+      "complete_case_n": 5648,
+      "n": 5648,
+      "mae_q_ha": 11.601479953648665,
+      "rmse_q_ha": 14.548925401953916,
+      "r2": -0.5174804293485917,
+      "mae_kg_ha": 1160.1479953648666,
+      "rmse_kg_ha": 1454.8925401953916,
+      "p90_abs_error_q_ha": 21.875157524066516,
+      "held_out_region": "Bangladesh"
+    },
+    {
+      "variant": "four_inputs_plus_annual_precip",
+      "model": "fixed_mean_ensemble_by_region",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o",
+        "total_precip"
+      ],
+      "held_out_regions": NaN,
+      "complete_case_n": 9547,
+      "n": 9547,
+      "mae_q_ha": 15.24333143118855,
+      "rmse_q_ha": 18.14359974734076,
+      "r2": -1.6382447019632198,
+      "mae_kg_ha": 1524.3331431188549,
+      "rmse_kg_ha": 1814.359974734076,
+      "p90_abs_error_q_ha": 28.972069858120307,
+      "held_out_region": "Bihar"
+    },
+    {
+      "variant": "four_inputs_plus_annual_precip",
+      "model": "fixed_mean_ensemble_by_region",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o",
+        "total_precip"
+      ],
+      "held_out_regions": NaN,
+      "complete_case_n": 4843,
+      "n": 4843,
+      "mae_q_ha": 10.959685412252638,
+      "rmse_q_ha": 14.066339945373654,
+      "r2": -0.046760712312579944,
+      "mae_kg_ha": 1095.9685412252638,
+      "rmse_kg_ha": 1406.6339945373654,
+      "p90_abs_error_q_ha": 22.31116252493621,
+      "held_out_region": "Nepal"
+    },
+    {
+      "variant": "four_inputs_plus_annual_precip",
+      "model": "fixed_mean_ensemble_by_region",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o",
+        "total_precip"
+      ],
+      "held_out_regions": NaN,
+      "complete_case_n": 1199,
+      "n": 1199,
+      "mae_q_ha": 11.253499671743455,
+      "rmse_q_ha": 14.508072855929345,
+      "r2": -0.024618686972802895,
+      "mae_kg_ha": 1125.3499671743455,
+      "rmse_kg_ha": 1450.8072855929345,
+      "p90_abs_error_q_ha": 25.45599612728994,
+      "held_out_region": "Odisha"
+    },
+    {
+      "variant": "four_inputs_plus_annual_precip",
+      "model": "fixed_mean_ensemble_by_region",
+      "features": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o",
+        "total_precip"
+      ],
+      "held_out_regions": NaN,
+      "complete_case_n": 5183,
+      "n": 5183,
+      "mae_q_ha": 22.129854795561254,
+      "rmse_q_ha": 23.755550293576704,
+      "r2": -3.624114506190687,
+      "mae_kg_ha": 2212.9854795561255,
+      "rmse_kg_ha": 2375.5550293576703,
+      "p90_abs_error_q_ha": 32.09829830411627,
+      "held_out_region": "Punjab_Haryana"
+    }
+  ],
+  "input_estimates": [
+    {
+      "scenario": "P_K_values_are_fertilizer_grade_P2O5_K2O",
+      "model": "fixed_mean_ensemble",
+      "estimate_kg_ha": 4513.676191408709,
+      "estimate_q_ha": 45.13676191408709,
+      "constituent_model_estimates_q_ha": [
+        44.74005217130073,
+        44.761430038177295,
+        48.6821912978344,
+        42.36337414903597
+      ],
+      "validation_mae_q_ha": 10.993865044312507,
+      "validation_rmse_q_ha": 13.75389941058135,
+      "validation_p90_abs_error_q_ha": 22.08234373689192,
+      "n_training_rows": 31181,
+      "input_fields_used": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "input_fields_ignored_due_to_source_mismatch": [
+        "moisture",
+        "temperature",
+        "humidity",
+        "rainfall"
+      ]
+    },
+    {
+      "scenario": "P_K_values_are_elemental_P_K_converted_to_oxides",
+      "model": "fixed_mean_ensemble",
+      "estimate_kg_ha": 4822.902004679253,
+      "estimate_q_ha": 48.22902004679253,
+      "constituent_model_estimates_q_ha": [
+        39.51082579506084,
+        53.74455711737347,
+        50.478789888068064,
+        49.18190738666774
+      ],
+      "validation_mae_q_ha": 10.993865044312507,
+      "validation_rmse_q_ha": 13.75389941058135,
+      "validation_p90_abs_error_q_ha": 22.08234373689192,
+      "n_training_rows": 31181,
+      "input_fields_used": [
+        "N_kg_ha",
+        "P2O5_ha",
+        "K2O_ha",
+        "SoilGrids_phh2o"
+      ],
+      "input_fields_ignored_due_to_source_mismatch": [
+        "moisture",
+        "temperature",
+        "humidity",
+        "rainfall"
+      ]
+    }
+  ]
+}

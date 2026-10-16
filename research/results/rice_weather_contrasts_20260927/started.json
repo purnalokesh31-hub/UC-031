@@ -1,0 +1,48 @@
+{
+  "started_utc": "2026-09-27T11:40:27.333315+00:00",
+  "evaluation_stage": "development",
+  "reserved_outcomes_scored": false,
+  "panel_sha256": "0d9249b8a6b2e36957332c121d0ff8229787326b63fd93655bd83e2960185a8c",
+  "source_sha256": {
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\weather_contrasts.py": "79c65790103628ec0f5c18a2b34f6dfa3a9142b9f242e36b63ff48f4f70096c6",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\benchmark.py": "34bdf0e83d91301953f47fbbdec582fc89fd48fa0c5d769e9dc23b7e23b4d77b",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\backend\\models\\validated_yield.py": "98bbd5edaebb6abab079def69945e76908f0be2cf5787113e99f7149684718bd",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\prepare_rice_pilot.py": "1fe961195482cf133e62d806634074919ff9398de5d06687f77678cc56c47e5e",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\protocol\\RICE_WEATHER_CONTRASTS.md": "63609f572a5a13d6d753160d1bcdb265b59a1536fa1d94d2db76384d3c324497",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\protocol\\rice_pilot_lockbox.json": "82a2dab768bf243555bd6767106fb0fada927a218046de75934fa0e39e9b0bed",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\results\\rice_feature_sensitivity_20260925\\split_metrics.csv": "f0040e71bf55eec7aadd829c46393805371c54f6231743d786cd97705d3f7b78",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\results\\rice_feature_sensitivity_20260925\\predictions.csv": "7886dc5eefdfbf1949b28c9c890be19a9f11cf76777160f4acb94db8aed2db08",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\results\\rice_pilot_development_20260925\\split_metrics.csv": "49b749e0e77e4dcbfdfd234b58fa48b50b04ee7c48f82ffbccceb00f37e281c7",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\results\\rice_pilot_development_20260925\\predictions.csv": "2f7783763d70d1174a44e364ed026fef9fe6f1346ae33e97354bc4d0fa67f68b"
+  },
+  "features": [
+    "half_temp_contrast_c",
+    "half_rain_contrast_mm",
+    "half_rh_contrast_pct",
+    "constant_zero",
+    "annual_mean_temp_c",
+    "annual_precip_mm",
+    "annual_mean_rh_pct",
+    "year_trend"
+  ],
+  "seeds": [
+    17,
+    29,
+    41,
+    53,
+    67
+  ],
+  "families": [
+    "classical_ridge",
+    "classical_rbf_kernel_control",
+    "quantum_simulated_entangled"
+  ],
+  "rows": 364,
+  "districts": 13,
+  "environment": {
+    "python": "3.12.13",
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "sklearn": "1.5.0"
+  }
+}

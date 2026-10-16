@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "split_score_groups_recomputed": 15,
+  "prediction_rows": 1260,
+  "development_rows": 364,
+  "original_output_hashes_verified": true,
+  "aggregate_scores_recomputed": true,
+  "reserved_outcomes_scored": false,
+  "report_source_sha256": "e677e3c8a536465838e468bf8e627c94c5489b56ce4c02bc9792add573bd7e52",
+  "figure_sha256": "e2b49837014ac8e700ae260f11682d94c0b9860548c58fecd042746a85021776"
+}

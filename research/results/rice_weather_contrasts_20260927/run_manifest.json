@@ -1,0 +1,66 @@
+{
+  "started_utc": "2026-09-27T11:40:27.333315+00:00",
+  "evaluation_stage": "development",
+  "reserved_outcomes_scored": false,
+  "panel_sha256": "0d9249b8a6b2e36957332c121d0ff8229787326b63fd93655bd83e2960185a8c",
+  "source_sha256": {
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\weather_contrasts.py": "79c65790103628ec0f5c18a2b34f6dfa3a9142b9f242e36b63ff48f4f70096c6",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\benchmark.py": "34bdf0e83d91301953f47fbbdec582fc89fd48fa0c5d769e9dc23b7e23b4d77b",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\backend\\models\\validated_yield.py": "98bbd5edaebb6abab079def69945e76908f0be2cf5787113e99f7149684718bd",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\prepare_rice_pilot.py": "1fe961195482cf133e62d806634074919ff9398de5d06687f77678cc56c47e5e",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\protocol\\RICE_WEATHER_CONTRASTS.md": "63609f572a5a13d6d753160d1bcdb265b59a1536fa1d94d2db76384d3c324497",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\protocol\\rice_pilot_lockbox.json": "82a2dab768bf243555bd6767106fb0fada927a218046de75934fa0e39e9b0bed",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\results\\rice_feature_sensitivity_20260925\\split_metrics.csv": "f0040e71bf55eec7aadd829c46393805371c54f6231743d786cd97705d3f7b78",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\results\\rice_feature_sensitivity_20260925\\predictions.csv": "7886dc5eefdfbf1949b28c9c890be19a9f11cf76777160f4acb94db8aed2db08",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\results\\rice_pilot_development_20260925\\split_metrics.csv": "49b749e0e77e4dcbfdfd234b58fa48b50b04ee7c48f82ffbccceb00f37e281c7",
+    "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\results\\rice_pilot_development_20260925\\predictions.csv": "2f7783763d70d1174a44e364ed026fef9fe6f1346ae33e97354bc4d0fa67f68b"
+  },
+  "features": [
+    "half_temp_contrast_c",
+    "half_rain_contrast_mm",
+    "half_rh_contrast_pct",
+    "constant_zero",
+    "annual_mean_temp_c",
+    "annual_precip_mm",
+    "annual_mean_rh_pct",
+    "year_trend"
+  ],
+  "seeds": [
+    17,
+    29,
+    41,
+    53,
+    67
+  ],
+  "families": [
+    "classical_ridge",
+    "classical_rbf_kernel_control",
+    "quantum_simulated_entangled"
+  ],
+  "rows": 364,
+  "districts": 13,
+  "environment": {
+    "python": "3.12.13",
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "sklearn": "1.5.0"
+  },
+  "completed_utc": "2026-09-27T11:41:19.693976+00:00",
+  "completed_fits": 15,
+  "output_sha256": {
+    "benchmark.py": "34bdf0e83d91301953f47fbbdec582fc89fd48fa0c5d769e9dc23b7e23b4d77b",
+    "development_features.csv": "cf05ab213b9c24b18e1e2ed1187eac02443e700af04271dd6a2bcd9f0afbccf6",
+    "predictions.csv": "9f5b17fb58768c87e67317d7fb7b92e944c6b93ee11413dff146cd738bf0897c",
+    "prepare_rice_pilot.py": "1fe961195482cf133e62d806634074919ff9398de5d06687f77678cc56c47e5e",
+    "RICE_WEATHER_CONTRASTS.md": "63609f572a5a13d6d753160d1bcdb265b59a1536fa1d94d2db76384d3c324497",
+    "splits.json": "1c0f98ae924e8a8a3016e3fc06b1e2583d40d3583264f5bf304f6b204cda0daa",
+    "split_metrics.csv": "4593ee49adbdaa8ec9db979b021d66c6633a602c3faf2c42bc7793f3a3d14a0e",
+    "started.json": "e41b239b70e2ae580ac59d3e367e5f3cb777075a9b27177fad498701af395899",
+    "summary.csv": "da93b22e3eccb27bcae5570cf60b405fc4283e8e218018db7511892e693aba21",
+    "tuning_results.json": "d20b5fa76c925bbe91cb2c285df6ce3ae82fe2c0cb1e146ada621de88c37f8fe",
+    "validated_yield.py": "98bbd5edaebb6abab079def69945e76908f0be2cf5787113e99f7149684718bd",
+    "WEATHER_CONTRASTS.md": "3e3f42e508c38c29e05b1e35773e79071670f5edd5bb76c5e3426de1ea3bd258",
+    "weather_contrasts.py": "79c65790103628ec0f5c18a2b34f6dfa3a9142b9f242e36b63ff48f4f70096c6",
+    "weather_source_manifest.json": "10445ca3a3db29b0ee06575707ad927df05e35d2946a95706e55f9f5763d3dd9"
+  }
+}

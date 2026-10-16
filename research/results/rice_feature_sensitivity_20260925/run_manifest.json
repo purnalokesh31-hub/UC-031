@@ -1,0 +1,40 @@
+{
+  "completed_utc": "2026-09-25T15:08:25.019151+00:00",
+  "evaluation_stage": "development",
+  "reserved_outcomes_scored": false,
+  "primary_results": "C:\\Users\\PURNA\\OneDrive\\Desktop\\UC-031\\research\\results\\rice_pilot_development_20260925",
+  "panel_sha256": "0d9249b8a6b2e36957332c121d0ff8229787326b63fd93655bd83e2960185a8c",
+  "source_sha256": "78d76afd8099da46717fd2c42f039248b0fb0e4ba8ac4fb2b6d5978bfeb80ec3",
+  "plan_sha256": "fe49ea0458bbc294ef3b0b26bae256c804a16899970c8b50929060cf961bddca",
+  "seeds": [
+    17,
+    29,
+    41,
+    53,
+    67
+  ],
+  "variants": {
+    "without_soil": [
+      "soil_nitrogen",
+      "soil_ph",
+      "soil_soc",
+      "soil_clay"
+    ],
+    "without_year": [
+      "year_trend"
+    ],
+    "weather_only": [
+      "soil_nitrogen",
+      "soil_ph",
+      "soil_soc",
+      "soil_clay",
+      "year_trend"
+    ]
+  },
+  "families": [
+    "classical_ridge",
+    "classical_rbf_kernel_control",
+    "quantum_simulated_entangled"
+  ],
+  "completed_fits": 45
+}

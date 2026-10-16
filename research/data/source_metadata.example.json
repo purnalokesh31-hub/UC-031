@@ -1,0 +1,32 @@
+{
+  "apy": {
+    "source_url": "https://data.gov.in/resource/district-wise-season-wise-crop-production-statistics-1997",
+    "retrieved_utc": "YYYY-MM-DDTHH:MM:SSZ",
+    "license_or_terms": "Government Open Data License - India; verify the resource terms at retrieval",
+    "raw_filename": "apy_source.csv",
+    "raw_sha256": "COMPUTE_SHA256_OF_UNCHANGED_SOURCE_FILE"
+  },
+  "district_centroids": {
+    "source_url": "CITE_THE_BOUNDARY_OR_CENTROID_SOURCE",
+    "retrieved_utc": "YYYY-MM-DDTHH:MM:SSZ",
+    "license_or_terms": "RECORD_LICENSE_AND_ATTRIBUTION",
+    "raw_filename": "district_geography_source.geojson",
+    "raw_sha256": "COMPUTE_SHA256_OF_UNCHANGED_SOURCE_FILE"
+  },
+  "crop_calendar": {
+    "source_url": "CITE_THE_AUTHORITATIVE_REGIONAL_CROP_CALENDAR",
+    "retrieved_utc": "YYYY-MM-DDTHH:MM:SSZ",
+    "license_or_terms": "RECORD_LICENSE_AND_ATTRIBUTION",
+    "raw_filename": "crop_calendar_source.pdf",
+    "raw_sha256": "COMPUTE_SHA256_OF_UNCHANGED_SOURCE_FILE",
+    "windows": [
+      {
+        "district_id": "STABLE_CANONICAL_DISTRICT_ID",
+        "state": "Andhra Pradesh",
+        "crop": "Rice",
+        "season": "Kharif",
+        "calendar_source": "SOURCE_PAGE_OR_TABLE"
+      }
+    ]
+  }
+}

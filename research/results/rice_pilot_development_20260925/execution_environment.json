@@ -1,0 +1,17 @@
+{
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+  "packages": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.5.0",
+    "qiskit": "1.1.1",
+    "matplotlib": "3.9.0"
+  },
+  "thread_limits": {
+    "OMP_NUM_THREADS": 2,
+    "OPENBLAS_NUM_THREADS": 2,
+    "MKL_NUM_THREADS": 2
+  }
+}

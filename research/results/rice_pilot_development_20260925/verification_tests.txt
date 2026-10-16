@@ -1,0 +1,24 @@
+test_duplicate_keys_fail (test_dld_staging.DldStagingTests.test_duplicate_keys_fail) ... ok
+test_missing_zero_and_other_negative_are_distinct (test_dld_staging.DldStagingTests.test_missing_zero_and_other_negative_are_distinct) ... ok
+test_nonfinite_yield_is_rejected (test_dld_staging.DldStagingTests.test_nonfinite_yield_is_rejected) ... ok
+test_units_and_reported_target_are_preserved (test_dld_staging.DldStagingTests.test_units_and_reported_target_are_preserved) ... ok
+test_fidelity_kernel_has_unit_diagonal_and_is_psd (test_quantum_numerics.QuantumNumericsTests.test_fidelity_kernel_has_unit_diagonal_and_is_psd) ... ok
+test_final_common_entangler_cancels_from_one_layer_fidelity (test_quantum_numerics.QuantumNumericsTests.test_final_common_entangler_cancels_from_one_layer_fidelity) ... ok
+test_numpy_states_match_independent_qiskit_circuit (test_quantum_numerics.QuantumNumericsTests.test_numpy_states_match_independent_qiskit_circuit) ... ok
+test_prediction_batch_composition_does_not_change_centering (test_quantum_numerics.QuantumNumericsTests.test_prediction_batch_composition_does_not_change_centering) ... ok
+test_agricultural_year_and_leap_day (test_rice_pilot.RicePilotTests.test_agricultural_year_and_leap_day) ... ok
+test_every_tuned_family_has_25_configurations_and_clones (test_rice_pilot.RicePilotTests.test_every_tuned_family_has_25_configurations_and_clones) ... ok
+test_missing_day_is_not_silently_summed (test_rice_pilot.RicePilotTests.test_missing_day_is_not_silently_summed) ... ok
+test_quantum_ablation_matches_main_when_entangled (test_rice_pilot.RicePilotTests.test_quantum_ablation_matches_main_when_entangled) ... ok
+test_changed_assignment_rejected (test_split_isolation.SplitIsolationTests.test_changed_assignment_rejected) ... ok
+test_default_run_never_calls_reserved_evaluation (test_split_isolation.SplitIsolationTests.test_default_run_never_calls_reserved_evaluation) ... ok
+test_development_excludes_every_reserved_role (test_split_isolation.SplitIsolationTests.test_development_excludes_every_reserved_role) ... ok
+test_failed_reserved_attempt_prevents_automatic_rescoring (test_split_isolation.SplitIsolationTests.test_failed_reserved_attempt_prevents_automatic_rescoring) ... ok
+test_freeze_refuses_overwrite (test_split_isolation.SplitIsolationTests.test_freeze_refuses_overwrite) ... ok
+test_reserved_requires_unchanged_frozen_code (test_split_isolation.SplitIsolationTests.test_reserved_requires_unchanged_frozen_code) ... ok
+test_small_calibration_rejected (test_split_isolation.SplitIsolationTests.test_small_calibration_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 1.992s
+
+OK
