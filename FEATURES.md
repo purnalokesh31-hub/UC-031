@@ -60,7 +60,7 @@ model has no validated mapping from growing-period aggregates to its features.
   or cross-device sync. Keep the same host and port: `localhost` and `127.0.0.1`
   have separate browser storage.
 - Use **Export backup** regularly. Individual analyses and harvest/history
-  records can also be exported as JSON. Backup import is not provided yet.
+  records can also be exported as JSON. Use **Import backup** under Location & backup to restore previously exported workspace backups.
 - Input drafts save as you edit, including while offline. Predictions, weather
   retrieval, research loading and circuit calculations require the backend.
 - The service worker caches the application shell and visited assets. Previously

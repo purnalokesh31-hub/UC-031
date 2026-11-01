@@ -30,7 +30,7 @@ class WeatherRequest(BaseModel):
 
     @model_validator(mode="after")
     def valid_period(self):
-        if self.start < date(1981, 1, 1) or self.end >= date.today() or not 0 <= (self.end-self.start).days <= 365:
+        if self.start < date(1981, 1, 1) or self.end >= date.today() or not 1 <= (self.end-self.start).days + 1 <= 366:
             raise ValueError("Choose 1–366 historical days, from 1981 onwards, ending before today.")
         return self
 

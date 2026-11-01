@@ -99,25 +99,66 @@ export function WorkspaceProvider({ children }) {
   const restore = useCallback(draft => {
     update(() => ({ draft })); setRestoreRequest({ id: newId(), draft }); window.location.hash = "dashboard";
   }, [update]);
-  return <Context.Provider value={{ store, update, online, restore, restoreRequest, storageError, savedAt, location, requestLocation }}>
+  const importBackup = useCallback(rawText => {
+    try {
+      const data = JSON.parse(rawText);
+      if (data.version !== 1 || ![data.fields, data.history, data.harvests].every(Array.isArray)) {
+        throw new Error("Invalid backup format. File must contain fields, history, and harvests arrays.");
+      }
+      update(current => ({
+        ...current,
+        fields: data.fields,
+        history: data.history,
+        harvests: data.harvests,
+        draft: data.draft || current.draft,
+      }));
+      return { success: true, count: { fields: data.fields.length, history: data.history.length, harvests: data.harvests.length } };
+    } catch (err) {
+      return { success: false, error: err.message || "Could not parse JSON backup file." };
+    }
+  }, [update]);
+  return <Context.Provider value={{ store, update, online, restore, restoreRequest, storageError, savedAt, location, requestLocation, importBackup }}>
     {children}
   </Context.Provider>;
 }
 export const useWorkspace = () => useContext(Context);
 
 export function WorkspaceStatus() {
-  const { online, storageError, savedAt, store, location, requestLocation } = useWorkspace();
+  const { online, storageError, savedAt, store, location, requestLocation, importBackup } = useWorkspace();
+  const fileInputRef = useRef(null);
+  const [importStatus, setImportStatus] = useState(null);
   const locationMessage = {
     locating: "Finding your location…",
     ready: "Location ready for new fields",
     denied: "Location blocked · enter coordinates in My fields",
     unavailable: "Location unavailable · enter coordinates in My fields",
   }[location.status];
+
+  const handleFileChange = event => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const res = importBackup(e.target.result);
+      if (res.success) {
+        setImportStatus(`Restored: ${res.count.fields} fields, ${res.count.history} analyses, ${res.count.harvests} harvest logs.`);
+      } else {
+        setImportStatus(`Import failed: ${res.error}`);
+      }
+      setTimeout(() => setImportStatus(null), 8000);
+    };
+    reader.readAsText(file);
+    event.target.value = "";
+  };
+
   return <aside className="workspace-save-status" aria-live="polite">
     <span>{storageError ? "Changes are in memory · export before closing" : !online ? "Offline · drafts remain on this device. Reconnect, then select Analyze yield." : savedAt ? "Saved on this device" : "Workspace stored on this device"}</span>
     <details className="workspace-utilities"><summary>Location & backup</summary><div>
       <span className="workspace-location-status" role="status">{locationMessage}{["denied", "unavailable"].includes(location.status) && <button type="button" onClick={requestLocation}>Try again</button>}</span>
       <button type="button" onClick={() => downloadJSON(store, "cropguard-workspace-backup.json")}>Export backup</button>
+      <input ref={fileInputRef} type="file" accept=".json,application/json" style={{ display: "none" }} onChange={handleFileChange} />
+      <button type="button" onClick={() => fileInputRef.current?.click()}>Import backup</button>
+      {importStatus && <span className="workspace-import-status" role="status">{importStatus}</span>}
     </div></details>
     {storageError && <p role="alert">{storageError}</p>}
   </aside>;

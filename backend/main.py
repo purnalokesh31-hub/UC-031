@@ -191,12 +191,13 @@ def predict_quantum(req: PredictRequest):
 
 def _recommendations(req, prediction):
     crop = req.crop_type
-    crop_data = get_solutions()["interventions"][crop]
-    baseline = crop_data["baseline_yield_qph"]
+    solutions = get_solutions()
+    crop_data = solutions.get("interventions", {}).get(crop, {})
+    baseline = float(crop_data.get("baseline_yield_qph", 0))
     selected = prediction["recommended"]
     pred = selected["yield_qph"]
-    ratio = pred / baseline
-    thresholds = get_solutions()["yield_thresholds"]
+    ratio = pred / baseline if baseline else 0.0
+    thresholds = solutions.get("yield_thresholds", {})
     severity = ("unassessed" if prediction["out_of_distribution"] else
                 "critical" if ratio < thresholds["critical"] else
                 "warning" if ratio < thresholds["warning"] else "normal")
@@ -215,6 +216,55 @@ def predict_both(req: PredictRequest):
     result = yield_service.predict(req.crop_type, req.model_dump())
     result["recommendations"] = _recommendations(req, result)
     return result
+
+
+class QuickPredictRequest(BaseModel):
+    model_config = ConfigDict(extra="allow", allow_inf_nan=False)
+    crop_type: str
+    nitrogen: Optional[float] = None
+    phosphorus: Optional[float] = None
+    potassium: Optional[float] = None
+    ph: Optional[float] = None
+    soil_moisture: Optional[float] = None
+    temperature: Optional[float] = None
+    humidity: Optional[float] = None
+    rainfall: Optional[float] = None
+    N: Optional[float] = None
+    P: Optional[float] = None
+    K: Optional[float] = None
+    pH: Optional[float] = None
+    moisture: Optional[float] = None
+
+
+@app.post("/yield/predict")
+def yield_predict(req: QuickPredictRequest):
+    """Standardized programmatic endpoint matching README specifications."""
+    data = req.model_dump()
+    mapped = {
+        "crop_type": req.crop_type,
+        "N": float(data.get("nitrogen") if data.get("nitrogen") is not None else data.get("N", 0)),
+        "P": float(data.get("phosphorus") if data.get("phosphorus") is not None else data.get("P", 0)),
+        "K": float(data.get("potassium") if data.get("potassium") is not None else data.get("K", 0)),
+        "pH": float(data.get("ph") if data.get("ph") is not None else data.get("pH", 7.0)),
+        "moisture": float(data.get("soil_moisture") if data.get("soil_moisture") is not None else data.get("moisture", 50)),
+        "temperature": float(data.get("temperature", 25.0)),
+        "humidity": float(data.get("humidity", 70.0)),
+        "rainfall": float(data.get("rainfall", 100.0)),
+    }
+    validated_req = PredictRequest(**mapped)
+    res = yield_service.predict(validated_req.crop_type, validated_req.model_dump(), ("selected",))
+    rec = res["recommended"]
+    return {
+        "selected_model": rec["model"],
+        "predicted_yield": rec["yield_qph"],
+        "interval_lower": rec["confidence_low"],
+        "interval_upper": rec["confidence_high"],
+        "unit": "quintals/ha",
+        "crop_type": res["crop_type"],
+        "release_id": res["release_id"],
+        "out_of_distribution": res["out_of_distribution"],
+        "warnings": res["warnings"],
+    }
 
 
 @app.post("/predict/selected")

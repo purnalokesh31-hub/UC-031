@@ -7,7 +7,7 @@
 [![CI Pipeline](https://img.shields.io/badge/build-passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/purnalokesh31-hub/UC-031)
 [![Coverage](https://img.shields.io/badge/coverage-94%25-brightgreen?style=flat-square)](https://github.com/purnalokesh31-hub/UC-031)
 [![Python](https://img.shields.io/badge/python-3.12-blue?style=flat-square&logo=python)](https://www.python.org/)
-[![React](https://img.shields.io/badge/react-19-61dafb?style=flat-square&logo=react)](https://react.dev/)
+[![React](https://img.shields.io/badge/react-18-61dafb?style=flat-square&logo=react)](https://react.dev/)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
 An agricultural decision engine that couples classical ensemble pipelines and simulated quantum kernel regression for crop yield prediction with finite-sample split-conformal prediction intervals, paired with an ONNX-accelerated plant disease diagnostic classifier.
