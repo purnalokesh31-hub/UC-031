@@ -36,7 +36,7 @@ from typing import Optional, List
 from threading import RLock
 
 import numpy as np
-from fastapi import FastAPI, HTTPException, UploadFile, File, Form
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
@@ -64,6 +64,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def api_prefix_middleware(request: Request, call_next):
+    # Rewrite /api/* to /* so frontend works both in dev proxy and production
+    if request.scope.get("path", "").startswith("/api/"):
+        request.scope["path"] = request.scope["path"][4:]
+    return await call_next(request)
 
 # ── Disease Detection Module ──────────────────────────────────────────── #
 try:
@@ -480,3 +488,24 @@ def engine_status():
         "supported_crops":     disease_engine.supported_crops,
         "setup_command":       setup_command,
     }
+
+
+# ── Static Files & SPA Fallback for Production ────────────────────────── #
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+FRONTEND_DIST = BASE_DIR.parent / "frontend" / "dist"
+if FRONTEND_DIST.exists():
+    assets_dir = FRONTEND_DIST / "assets"
+    if assets_dir.exists():
+        app.mount("/assets", StaticFiles(directory=str(assets_dir)), name="assets")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def serve_spa(full_path: str):
+        target_file = FRONTEND_DIST / full_path
+        if full_path and target_file.is_file():
+            return FileResponse(str(target_file))
+        index_file = FRONTEND_DIST / "index.html"
+        if index_file.is_file():
+            return FileResponse(str(index_file))
+        return JSONResponse({"status": "error", "message": "Frontend build not found"}, status_code=404)
